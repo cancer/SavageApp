@@ -1,0 +1,30 @@
+{
+  "name": "SavageApp",
+  "version": "0.0.0",
+  "description": "Utility web-app for KITDA",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/cancer/SavageApp"
+  },
+  "author": "cancer",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cancer/SavageApp/issues"
+  },
+  "homepage": "https://github.com/cancer/SavageApp",
+  "devDependencies": {
+    "grunt": "0.4.2",
+    "grunt-contrib-watch": "0.5.3",
+    "grunt-contrib-coffee": "0.9.0",
+    "grunt-contrib-connect": "0.5.0",
+    "grunt-contrib-concat": "0.3.0",
+    "grunt-contrib-compass": "~0.7.1",
+    "grunt-contrib-uglify": "0.3.2",
+    "grunt-contrib-clean": "0.5.0",
+    "load-grunt-tasks": "0.3.0"
+  }
+}
