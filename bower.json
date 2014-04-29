@@ -1,0 +1,21 @@
+{
+  "name": "SavageApp",
+  "version": "0.0.0",
+  "homepage": "https://github.com/cancer/SavageApp",
+  "description": "Utility web-app for KITDA",
+  "main": "app.js",
+  "authors": [
+    "cancer"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "~2.1.0"
+  }
+}
