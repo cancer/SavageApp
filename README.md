@@ -1,13 +1,24 @@
 # SavageApp
 Utility web-app for 関東IT土方組合
+というか幹事支援ツール
 
+## Requirements
 - ○メンバー管理
 - ○チーム分け
 - △分けられたチームからのスパイぎめ
 - △当日の出席管理
 (△は優先度低め)
 
-# Initialize
+## Specs?
+- DB?
+ - SQL? mongodb?
+ - スプレッドシート使えば楽じゃない？
+- ワイヤー
+ - https://cacoo.com/diagrams/4re2IZRzkpLgMl7D
+- Ionic使ってみたい
+ - http://ionicframework.com/
+
+## Setup
 
 node/rubyのインストール
 ```
@@ -37,3 +48,4 @@ bowerのインストール
 $ npm install -g bower
 $ bower install
 ```
+
