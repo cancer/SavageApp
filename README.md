@@ -14,9 +14,14 @@ Utility web-app for 関東IT土方組合
  - SQL? mongodb?
  - スプレッドシート使えば楽じゃない？
 - ワイヤー
- - https://cacoo.com/diagrams/4re2IZRzkpLgMl7D
+ - [](https://cacoo.com/diagrams/4re2IZRzkpLgMl7D)
 - Ionic使ってみたい
- - http://ionicframework.com/
+ - [](http://ionicframework.com/)
+
+### スプレッドシートからデータを取ってくる
+この辺
+- [](http://d.hatena.ne.jp/shinobu_siv/20121028/1351405359)
+- [](http://qiita.com/kjunichi/items/552f13b48685021966e4)
 
 ## Setup
 
