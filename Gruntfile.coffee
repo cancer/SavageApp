@@ -48,5 +48,6 @@ module.exports = (grunt) ->
         files: ['scss/**/*.scss']
         tasks: ['compass']
 
-  grunt.registerTask 'default', ['connect', 'watch']
+  grunt.registerTask 'build', ['coffee', 'concat', 'compass']
 
+  grunt.registerTask 'default', ['connect', 'watch']
