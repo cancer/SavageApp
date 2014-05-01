@@ -7,7 +7,7 @@ module.exports = (grunt) ->
       compile:
         files:
           'htdocs/js/app.js': [
-            'coffee/app.js'
+            'coffee/app.coffee'
           ]
     concat:
       options:
