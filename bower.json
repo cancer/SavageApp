@@ -17,7 +17,8 @@
   ],
   "dependencies": {
     "jquery": "~2.1.0",
-    "angularjs": "*",
-    "ionic": "~0.9.27"
+    "underscore": "~1.6.0",
+    "angular": "~1.2.16",
+    "ratchet": "~2.0.2"
   }
 }
