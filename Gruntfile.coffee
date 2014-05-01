@@ -6,21 +6,41 @@ module.exports = (grunt) ->
     coffee:
       compile:
         files:
-          'app.js': [
+          'htdocs/js/app.js': [
             'coffee/app.js'
           ]
+    concat:
+      options:
+        separator: ';'
+      dist:
+        src: [
+          'bower_components/angular/angular.min.js'
+          'bower_components/jquery/dist/jquery.min.js'
+          'bower_components/underscore/underscore.js'
+          'bower_components/ratchet/dist/js/ratchet.min.js'
+        ]
+        dest: 'htdocs/js/vendor.js'
     compass:
       compile:
         options:
+          bundleExec: true
           sassDir: 'sass'
-          cssDir: 'css'
+          cssDir: 'htdocs/css'
           environment: 'production'
     connect:
       server:
         options:
+          livereload: true
           port: '9000'
-          base: '.'
+          base: './htdocs/'
+          middleWare: (connect, options) ->
+            return [
+              connect.static options.base
+              require('grunt-connect-proxy/lib/utils').proxyRequest
+            ]
     watch:
+      options:
+        livereload: true
       coffee:
         files: ['coffee/**/*.coffee']
         tasks: ['coffee']

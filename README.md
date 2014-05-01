@@ -48,9 +48,14 @@ $ npm install -g grunt-cli
 $ npm install
 ```
 
-bowerのインストール
+bower_componentsのインストール
 ```
 $ npm install -g bower
 $ bower install
 ```
 
+## Start Development
+```
+$ grunt
+$ (open http://localhost:9000/)
+```
