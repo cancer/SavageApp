@@ -3,4 +3,7 @@ node_modules/
 bower_components/
 *.db
 *.DS_Store
+vendor/bundle/
+.bundle/
 
+htdocs/js/vendor.js
