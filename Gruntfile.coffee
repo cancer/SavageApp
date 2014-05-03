@@ -8,25 +8,39 @@ module.exports = (grunt) ->
         files:
           'htdocs/js/app.js': [
             'coffee/app.coffee'
+            'coffee/controler/**/*.coffee"'
+            'coffee/directive/**/*.coffee'
           ]
+
     concat:
-      options:
-        separator: ';'
-      dist:
+      vendorjs:
+        options:
+          separator: ';'
         src: [
-          'bower_components/angular/angular.min.js'
-          'bower_components/jquery/dist/jquery.min.js'
+          'bower_components/angular/angular.js'
+          'bower_components/angular-route/angular-route.js'
+          'bower_components/jquery/dist/jquery.js'
           'bower_components/underscore/underscore.js'
-          'bower_components/ratchet/dist/js/ratchet.min.js'
+          'bower_components/ratchet/dist/js/ratchet.js'
         ]
         dest: 'htdocs/js/vendor.js'
+      html:
+        src: [
+          'template/head.html'
+          'template/contents/**/*.html'
+          'template/contents.html'
+          'template/foot.html'
+        ]
+        dest: 'htdocs/index.html'
+
     compass:
-      compile:
+      options:
+        bundleExec: true
+        config: 'config.rb'
+      product:
         options:
-          bundleExec: true
-          sassDir: 'sass'
-          cssDir: 'htdocs/css'
           environment: 'production'
+
     connect:
       server:
         options:
@@ -38,6 +52,7 @@ module.exports = (grunt) ->
               connect.static options.base
               require('grunt-connect-proxy/lib/utils').proxyRequest
             ]
+
     watch:
       options:
         livereload: true
@@ -47,6 +62,9 @@ module.exports = (grunt) ->
       compass:
         files: ['scss/**/*.scss']
         tasks: ['compass']
+      concat:
+        files: ['template/**/*.html']
+        tasks: ['concat:html']
 
   grunt.registerTask 'build', ['coffee', 'concat', 'compass']
 
