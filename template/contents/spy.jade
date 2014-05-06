@@ -1,0 +1,104 @@
+h2 スパイ決め
+div(ng-show="!modalShow")
+  .teams
+
+    .team(class="team--rea")
+      .team__amount 赤: {{teams.first.length}}人
+      a(ng-click="assignRole('first')", href="javascript:void(0)") スパイを決める
+      br
+      a(ng-click="checkSpy('first')" href="javascript:void(0)") スパイを確認する
+      ul.members
+        li.members__member(ng-repeat="member in teams.first") {{member.name}}
+
+    .team(class="team--yellow")
+      .team__amount 黄: {{teams.second.length}}人
+      a(ng-click="assignRole('second')", href="javascript:void(0)") スパイを決める
+      br
+      a(ng-click="checkSpy('second')" href="javascript:void(0)") スパイを確認する
+      ul.members
+        li.members__member(ng-repeat="member in teams.second") {{member.name}}
+
+.modal(ng-show="modalShow")
+  | スパイを決めますか？
+  br
+  a(ng-click="assignSpy()", href="javascript:void(0)") 決める
+  a(ng-click="modalShow = !modalShow", href="javascript:void(0)") キャンセル
+
+div(ng-show="showFirstSpy")
+
+  div(ng-show="!showSpy")
+    | あなたは赤チームですか？
+    br
+    a(ng-click!="showSpy = !showSpy", href="javascript:void(0)") はい
+
+  div(ng-show="!showSpy")
+    | 黄チームのスパイは{{teams.spy.first.name}}さんです
+    br
+    a(ng-click="closeSpyModal()", href="javascript:void(0)") 閉じる
+
+div(ng-show="showSecondSpy")
+
+  div(ng-show="!showSpy")
+    | あなたは黄チームですか？
+    br
+    a(ng-click!="showSpy = !showSpy", href="javascript:void(0)") はい
+
+  div(ng-show="showSpy")
+    | 赤チームのスパイは{{teams.spy.second.name}}さんです
+    br
+    a(ng-click="closeSpyModal()", href="javascript:void(0)") 閉じる
+
+
+div(ng-show="showFirstRole")
+
+  div(ng-show!="!showRole && !shownRole")
+    h3 赤チームのスパイを決めます
+    p
+      | {{identifier.name}}さん
+      br
+      | 他の人に見えないように自分の役割を確認して下さい
+    a(ng-click!="showRole = true", href="javascript:void(0)") 自分の役割を確認する
+
+  div(ng-show="showRole")
+    h3 赤チームのスパイを決めます
+    p
+      | {{identifier.name}}さんの役割は
+      br
+      strong(ng-show="identifier.isSpy") あなたはスパイです
+      strong(ng-show="!identifier.isSpy") あなたはスパイではありません
+    a(ng-click="nextRole()", href="javascript:void(0)") 次の人へ
+
+  div(ng-show="shownRole")
+    h3 赤チームのスパイが決まりました
+    p
+      | 黄チームの人に渡してください
+      br
+      | 赤チームの人は下のボタンを押さないでください
+    a(ng-click="assignRole('second')", href="javascript:void(0)") 黄チームのスパイを決める
+
+
+div(ng-show="showSecondRole")
+
+  div(ng-show!="!showRole && !shownRole")
+    h3 黄チームのスパイを決めます
+    p
+      | {{identifier.name}}さん
+      br
+      | 他の人に見えないように自分の役割を確認して下さい
+    a(ng-click!="showRole = true", href="javascript:void(0)") 自分の役割を確認する
+
+  div(ng-show="showRole")
+    h3 黄チームのスパイを決めます
+    p
+      | {{identifier.name}}さんの役割は
+      br
+      strong(ng-show="identifier.isSpy") あなたはスパイです
+      strong(ng-show="!identifier.isSpy") あなたはスパイではありません
+    a(ng-click="nextRole()", href="javascript:void(0)") 次の人へ
+
+  div(ng-show="shownRole")
+    h3 黄チームのスパイが決まりました
+      | 赤チームの人に渡してください
+      br
+      | 黄チームの人は下のボタンを押さないでください
+    a(ng-click="assignRole('first')", href="javascript:void(0)") 赤チームのスパイを決める
