@@ -1,26 +1,27 @@
+h2 チーム分け
 .division(ng-show="!modalShow")
   a.division__btn(ng-click="modalShow = true", href="javascript:void(0)") チームを自動で分ける
   br
-  p(ng-show="!shuffledTeam")
+  p(ng-show="!initTeam")
     | まだチームが作成されていません。
     br
     | メンバーの名前をタップすると、所属チームを変更することができます。
-  p(ng-show="shuffledTeam")
+  p(ng-show="initTeam")
     | 以下のように割り振りされました。
     br
     | メンバーの名前をタップすると、所属チームを変更することができます。
-  .teams(ng-show="shuffledTeam")
+  .teams(ng-show="initTeam")
     .team(class="team--red")
       .team__amount
-        | 赤：{{shuffledTeam.first.length}}人
+        | 赤：{{initTeam.first.length}}人
       ul.members
-        li.members__member(ng-repeat="member in shuffledTeam.first")
+        li.members__member(ng-repeat="member in initTeam.first")
           | {{member.name}}
     .team(class="team--yellow")
       .team__amount
-        | 黄：{{shuffledTeam.second.length}}人
+        | 黄：{{initTeam.second.length}}人
       ul.members
-        li.members__member(ng-repeat="member in shuffledTeam.second")
+        li.members__member(ng-repeat="member in initTeam.second")
           | {{member.name}}
 .modal(ng-class="{ 'is--visible': modalShow, 'is--hidden': !modalShow }")
   | (TODO: ほんとはモーダルだよ)
