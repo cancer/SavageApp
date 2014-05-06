@@ -21,6 +21,7 @@
 
   kitd.controller('Spy', [
     '$scope', 'members', 'teams', function($scope, members, teams) {
+      var count, identifiers, showRoleComplete;
       $scope.members = members;
       teams.shuffle();
       $scope.teams = teams;
@@ -28,21 +29,42 @@
       $scope.modalShow = false;
       $scope.showFirstSpy = false;
       $scope.showSecondSpy = false;
-      $scope.isSpyAssigned = false;
-      $scope.assignSpy = function() {
-        teams.assignSpy();
-        console.log(teams);
-        $scope.isSpyAssigned = true;
-        if ($scope.modalShow) {
-          return $scope.modalShow = false;
-        }
-      };
+      $scope.showFirstRole = false;
+      $scope.showSecondRole = false;
+      $scope.identifier = null;
+      teams.assignSpy();
       $scope.checkSpy = function(team) {
         if (team === 'first') {
           return $scope.showFirstSpy = true;
         } else {
           return $scope.showSecondSpy = true;
         }
+      };
+      identifiers = null;
+      $scope.assignRole = function(team) {
+        if (team === 'first') {
+          $scope.showFirstRole = true;
+          identifiers = teams.first;
+          return $scope.identifier = teams.first[0];
+        } else {
+          $scope.showSecondRole = true;
+          identifiers = teams.second;
+          return $scope.identifier = teams.second[0];
+        }
+      };
+      count = 0;
+      $scope.nextRole = function() {
+        count++;
+        console.log(identifiers[count]);
+        $scope.identifier = identifiers[count];
+        console.log($scope.identifier);
+        if (!$scope.identifier) {
+          showRoleComplete();
+        }
+        return $scope.showRole = false;
+      };
+      showRoleComplete = function() {
+        return $scope.shownRole = true;
       };
       return $scope.closeSpyModal = function() {
         $scope.showSpy = false;
@@ -93,7 +115,14 @@
 
       Teams.prototype.assignSpy = function() {
         this.spy.first = _.sample(this.first);
-        return this.spy.second = _.sample(this.second);
+        this.spy.second = _.sample(this.second);
+        return _.each([this.first, this.second], (function(_this) {
+          return function(team) {
+            return _.each(team, function(member) {
+              return member.isSpy = member.name === _this.spy.name ? true : false;
+            });
+          };
+        })(this));
       };
 
       Teams.prototype.toObj = function() {
