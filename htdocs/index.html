@@ -103,10 +103,8 @@
             <p>{{identifier.name}}さんの役割は<br><strong ng-show="identifier.isSpy">あなたはスパイです</strong><strong ng-show="!identifier.isSpy">あなたはスパイではありません</strong></p><a ng-click="nextRole()" href="javascript:void(0)">次の人へ</a>
           </div>
           <div ng-show="shownRole">
-            <h3>
-              黄チームのスパイが決まりました
-              赤チームの人に渡してください<br>黄チームの人は下のボタンを押さないでください
-            </h3><a ng-click="assignRole('first')" href="javascript:void(0)">赤チームのスパイを決める</a>
+            <h3>黄チームのスパイが決まりました</h3>
+            <p>赤チームの人に渡してください<br>黄チームの人は下のボタンを押さないでください</p><a ng-click="assignRole('first')" href="javascript:void(0)">赤チームのスパイを決める</a>
           </div>
         </div>
       </script>
