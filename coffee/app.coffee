@@ -86,7 +86,7 @@ kitd.factory 'teams', (members) ->
     constructor: ->
       @first = null
       @second = null
-      @spy = {}
+      @spy = []
 
     shuffle: ->
       _members = _.shuffle members
@@ -97,11 +97,11 @@ kitd.factory 'teams', (members) ->
         (count % 2) is 1
 
     assignSpy: ->
-      @spy.first = _.sample @first
-      @spy.second = _.sample @second
-      _.each [@first, @second], (team) =>
+      @spy[0] = _.sample @first
+      @spy[1] = _.sample @second
+      _.each [@first, @second], (team, idx) =>
         _.each team, (member) =>
-          member.isSpy = if member.name is @spy.name then true else false
+          member.isSpy = if member.name is @spy[idx].name then true else false
 
     toObj: ->
       return {

@@ -98,7 +98,7 @@
       function Teams() {
         this.first = null;
         this.second = null;
-        this.spy = {};
+        this.spy = [];
       }
 
       Teams.prototype.shuffle = function() {
@@ -114,12 +114,12 @@
       };
 
       Teams.prototype.assignSpy = function() {
-        this.spy.first = _.sample(this.first);
-        this.spy.second = _.sample(this.second);
+        this.spy[0] = _.sample(this.first);
+        this.spy[1] = _.sample(this.second);
         return _.each([this.first, this.second], (function(_this) {
-          return function(team) {
+          return function(team, idx) {
             return _.each(team, function(member) {
-              return member.isSpy = member.name === _this.spy.name ? true : false;
+              return member.isSpy = member.name === _this.spy[idx].name ? true : false;
             });
           };
         })(this));
