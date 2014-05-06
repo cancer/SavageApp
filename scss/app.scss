@@ -1,2 +1,10 @@
-@import 'compass'
-@import 'compass/reset'
+@import 'compass';
+@import 'compass/reset';
+
+.is--visible {
+  display: block;
+}
+
+.is--hidden {
+  display: none;
+}

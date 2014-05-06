@@ -1,0 +1,30 @@
+<script type="text/ng-template" id="contents/team.html">
+  <div ng-show="!modalShow">
+    <a class="dividion__btn" href="javascript:void(0)" ng-click="modalShow = true">チームを自動で分ける</a><br>
+    <p ng-show="!shuffledTeam">まだチームが作成されていません。<br>メンバーの名前をタップすると、所属チームを変更することができます。</p>
+    <p ng-show="shuffledTeam">以下のように割り振りされました。<br>メンバーの名前をタップすると、所属チームを変更することができます。</p>
+    <div ng-show="shuffledTeam" class="teams">
+      <div class="team  team--red">
+        <div class="team__amount">赤: {{shuffledTeam.first.length}}人</div>
+        <ul class="members">
+          <li class="members__member" ng-repeat="member in shuffledTeam.first">{{member.name}}</li>
+        </ul>
+      </div>
+      <div class="team  team--yellow">
+        <div class="team__amount">赤: {{shuffledTeam.second.length}}人</div>
+        <ul class="members">
+          <li class="members__member" ng-repeat="member in shuffledTeam.second">{{member.name}}</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="modal" ng-class="{
+    'is--visible': modalShow,
+    'is--hidden': !modalShow
+  }">
+    (TODO: ほんとはモーダルだよ)<br>
+    チームのシャッフルを行います。よろしいですか？<br>
+    <a href="javascript:void(0)" ng-click="shuffleMembers()">シャッフルする</a>
+    <a href="javascript:void(0)" ng-click="modalShow = !modalShow">キャンセル</a>
+  </div>
+</script>
