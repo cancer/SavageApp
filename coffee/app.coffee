@@ -14,7 +14,7 @@ kitd.config ['$routeProvider', ($routeProvider) ->
       controller : 'Team'
 
     .when '/spy/',
-      templateUrl: 'contents/spy.html'
+      templateUrl: 'contents/spy.jade'
       controller: 'Spy'
 ]
 
