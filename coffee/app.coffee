@@ -12,28 +12,79 @@ kitd.config ['$routeProvider', ($routeProvider) ->
     .when '/team/',
       templateUrl: 'contents/team.jade'
       controller : 'Team'
+
+    .when '/spy/',
+      templateUrl: 'contents/spy.html'
+      controller: 'Spy'
 ]
 
-kitd.controller 'Team', ['$scope', 'members', ($scope, @members) ->
-  $scope.members = @members
-
+kitd.controller 'Spy', ['$scope', 'members','teams', ($scope, members, teams) ->
+  $scope.members = members
+  # TODO: まだ保存できないからシャッフルしちゃう
+  teams.shuffle()
+  $scope.teams = teams
+  console.log $scope.teams
   $scope.modalShow = false
+  $scope.showFirstSpy = false
+  $scope.showSecondSpy = false
+  $scope.isSpyAssigned = false
 
-  $scope.shuffledTeam = null
+  $scope.assignSpy = ->
+    teams.assignSpy()
+    console.log teams
+    $scope.isSpyAssigned = true
+    $scope.modalShow = false if $scope.modalShow
 
-  $scope.shuffleMembers = (members = @members)->
-    members = _.shuffle members
-    count = 0
-    [first, second] = _.partition members, =>
-      # 最後にカウントアップさせられない
-      count++
-      (count % 2) is 1
+  $scope.checkSpy = (team) ->
+    if team is 'first'
+      $scope.showFirstSpy = true
+    else
+      $scope.showSecondSpy = true
 
-    $scope.shuffledTeam =
-      first: first
-      second: second
+  $scope.closeSpyModal = ->
+    $scope.showSpy = false
+    $scope.showFirstSpy = false
+    $scope.showSecondSpy = false
+]
+
+kitd.controller 'Team', ['$scope', 'members', 'teams', ($scope, members, teams) ->
+  $scope.members = members
+  $scope.teams = teams
+  $scope.modalShow = false
+  $scope.initTeam = false
+
+  $scope.shuffleMembers = ->
+    $scope.initTeam = true unless $scope.initTeam
+    teams.shuffle()
     $scope.modalShow = false if $scope.modalShow
 ]
+
+kitd.factory 'teams', (members) ->
+  class Teams
+    constructor: ->
+      @first = null
+      @second = null
+      @spy = {}
+
+    shuffle: ->
+      _members = _.shuffle members
+      count = 0
+      [@first, @second] = _.partition _members, =>
+        # 最後にカウントアップさせられない
+        count++
+        (count % 2) is 1
+
+    assignSpy: ->
+      @spy.first = _.sample @first
+      @spy.second = _.sample @second
+
+    toObj: ->
+      return {
+        first: @first
+        second: @second
+      }
+
+  new Teams()
 
 kitd.controller 'Main', ['$scope', 'members', ($scope, @members) ->
   console.log @members
