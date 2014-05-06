@@ -7,10 +7,10 @@
   kitd.config([
     '$routeProvider', function($routeProvider) {
       return $routeProvider.when('/', {
-        templateUrl: 'main.html',
+        templateUrl: 'main.jade',
         controller: 'Main'
       }).when('/team/', {
-        templateUrl: 'contents/team.html',
+        templateUrl: 'contents/team.jade',
         controller: 'Team'
       });
     }

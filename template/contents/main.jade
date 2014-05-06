@@ -1,0 +1,25 @@
+ul.members
+  li.members__member(ng-repeat="member in members")
+    .members__summary(ng-show="!member.isEditorShow")
+      span.members__name--summary {{member.name}}
+      input.members__state--awake(
+        type="checkbox"
+        ng-checked="member.isAwaken"
+        ng-click="member.isAwaken=!member.isAwaken"
+        ng-model="member.isAwaken"
+      )
+      a.members__edit(ng-click="showEdit(member)", href="javascript:void(0)") 編集
+    .members__edit(ng-show="member.isEditorShow")
+      | 名前：
+      input(ng-model="member.name", type="text")
+      br
+      span(ng-show="member.isAwaken") 起きてる
+      span(ng-show="!member.isAwaken") まだ寝てる
+      a(ng-click="save(member)"    , href="javascript:void(0)") 変更する
+      a(ng-click="delete(member)"  , href="javascript:void(0)") メンバーを削除
+      a(ng-click="hideEdit(member)", href="javascript:void(0)") 閉じる
+div
+  a(ng-click="createWakeUpMail()", href="javascript:void(0)") 起床メールを作成する
+.members--awaken(ng-show="awakenMembers")
+  div(ng-repeat="member in awakenMembers") {{member}}
+

@@ -1,81 +1,55 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="kitd">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-  <title>SavageApp</title>
-  <meta name="format-detection" content="telephone=no">
-  <meta http-equiv="Cache-Control" content="no-cache">
-  <meta http-equiv="Pragma" content="no-cache">
-
-  <link rel="stylesheet" href="css/app.css">
-  <script type="text/javascript" src="js/vendor.js"></script>
-  <script type="text/javascript" src="js/app.js"></script>
-</head>
-<body>
-  <h1>Hello SavageApp!!</h1>
-  <div class="wrap" ng-view></div>
-
-<script type="text/ng-template" id="main.html">
-  <ul class="members">
-    <li ng-repeat="member in members" class="members__member">
-      <div ng-show="!member.isEditorShow" class="members__summary">
-        <span class="members__name--summary">{{member.name}}</span>
-        <input type="checkbox"
-          ng-checked="member.isAwaken"
-          ng-click="member.isAwaken=!member.isAwaken"
-          ng-model="member.isAwaken"
-          class="members__state--awake">
-        <a href="javascript:void(0)" ng-click="showEdit(member)" class="members__edit">編集</a>
-      </div>
-      <div ng-show="member.isEditorShow" class="members__edit">
-        名前: <input type="text" ng-model="member.name"><br>
-        <span ng-show="member.isAwaken">起きてる</span>
-        <span ng-show="!member.isAwaken">まだ寝てる</span><br>
-        <a href="javascript:void(0)" ng-click="save(member)">変更する</a>
-        <a href="javascript:void(0)" ng-click="delete(member)">メンバーを削除</a>
-        <a href="javascript:void(0)" ng-click="hideEdit(member)">閉じる</a>
-      </div>
-    </li>
-  </ul>
-
-  <a href="javascript:void(0)" ng-click="createWakeUpMail()">起床メールを作成する</a>
-  <div ng-show="awakenMembers" class="members--awaken">
-    <div ng-repeat="member in awakenMembers">{{member}}</div>
-  </div>
-</script>
-
-<script type="text/ng-template" id="contents/team.html">
-  <div ng-show="!modalShow">
-    <a class="dividion__btn" href="javascript:void(0)" ng-click="modalShow = true">チームを自動で分ける</a><br>
-    <p ng-show="!shuffledTeam">まだチームが作成されていません。<br>メンバーの名前をタップすると、所属チームを変更することができます。</p>
-    <p ng-show="shuffledTeam">以下のように割り振りされました。<br>メンバーの名前をタップすると、所属チームを変更することができます。</p>
-    <div ng-show="shuffledTeam" class="teams">
-      <div class="team  team--red">
-        <div class="team__amount">赤: {{shuffledTeam.first.length}}人</div>
+<html lang="ja" ng-app="kitd">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <meta http-equiv="Pragma" content="no-cache">
+    <link href="css/app.css" rel="stylesheet">
+    <script src="js/vendor.js"></script>
+    <script src="js/app.js"></script>
+    <title>SavageApp</title>
+  </head>
+  <body>
+    <h1>Hello SavageApp!!</h1>
+    <div ng-view class="wrap">
+      <script id="main.jade" type="text/ng-template">
         <ul class="members">
-          <li class="members__member" ng-repeat="member in shuffledTeam.first">{{member.name}}</li>
+          <li ng-repeat="member in members" class="members__member">
+            <div ng-show="!member.isEditorShow" class="members__summary"><span class="members__name--summary">{{member.name}}</span>
+              <input type="checkbox" ng-checked="member.isAwaken" ng-click="member.isAwaken=!member.isAwaken" ng-model="member.isAwaken" class="members__state--awake"><a ng-click="showEdit(member)" href="javascript:void(0)" class="members__edit">編集</a>
+            </div>
+            <div ng-show="member.isEditorShow" class="members__edit">名前：
+              <input ng-model="member.name" type="text"><br><span ng-show="member.isAwaken">起きてる</span><span ng-show="!member.isAwaken">まだ寝てる</span><a ng-click="save(member)" href="javascript:void(0)">変更する</a><a ng-click="delete(member)" href="javascript:void(0)">メンバーを削除</a><a ng-click="hideEdit(member)" href="javascript:void(0)">閉じる</a>
+            </div>
+          </li>
         </ul>
-      </div>
-      <div class="team  team--yellow">
-        <div class="team__amount">赤: {{shuffledTeam.second.length}}人</div>
-        <ul class="members">
-          <li class="members__member" ng-repeat="member in shuffledTeam.second">{{member.name}}</li>
-        </ul>
-      </div>
+        <div><a ng-click="createWakeUpMail()" href="javascript:void(0)">起床メールを作成する</a></div>
+        <div ng-show="awakenMembers" class="members--awaken">
+          <div ng-repeat="member in awakenMembers">{{member}}</div>
+        </div>
+      </script>
+      <script id="contents/team.jade" type="text/ng-template">
+        <div ng-show="!modalShow" class="division"><a ng-click="modalShow = true" href="javascript:void(0)" class="division__btn">チームを自動で分ける</a><br>
+          <p ng-show="!shuffledTeam">まだチームが作成されていません。<br>メンバーの名前をタップすると、所属チームを変更することができます。</p>
+          <p ng-show="shuffledTeam">以下のように割り振りされました。<br>メンバーの名前をタップすると、所属チームを変更することができます。</p>
+          <div ng-show="shuffledTeam" class="teams">
+            <div class="team team--red">
+              <div class="team__amount">赤：{{shuffledTeam.first.length}}人</div>
+              <ul class="members">
+                <li ng-repeat="member in shuffledTeam.first" class="members__member">{{member.name}}</li>
+              </ul>
+            </div>
+            <div class="team team--yellow">
+              <div class="team__amount">黄：{{shuffledTeam.second.length}}人</div>
+              <ul class="members">
+                <li ng-repeat="member in shuffledTeam.second" class="members__member">{{member.name}}</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div ng-class="{ 'is--visible': modalShow, 'is--hidden': !modalShow }" class="modal">(TODO: ほんとはモーダルだよ)<br>チームのシャッフルを行います。よろしいですか？<br><a ng-click="shuffleMembers()" href="javascript:void(0)">シャッフルする</a><a ng-click="modalShow = !modalShow" href="javascript:void(0)">キャンセル</a></div></div>
+      </script>
     </div>
-  </div>
-  <div class="modal" ng-class="{
-    'is--visible': modalShow,
-    'is--hidden': !modalShow
-  }">
-    (TODO: ほんとはモーダルだよ)<br>
-    チームのシャッフルを行います。よろしいですか？<br>
-    <a href="javascript:void(0)" ng-click="shuffleMembers()">シャッフルする</a>
-    <a href="javascript:void(0)" ng-click="modalShow = !modalShow">キャンセル</a>
-  </div>
-</script>
-
-</body>
+  </body>
 </html>
-
