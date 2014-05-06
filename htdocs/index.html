@@ -17,6 +17,7 @@
   <div class="wrap" ng-view></div>
 
 <script type="text/ng-template" id="main.html">
+  <h2>メンバーリスト</h2>
   <ul class="members">
     <li ng-repeat="member in members" class="members__member">
       <div ng-show="!member.isEditorShow" class="members__summary">
@@ -45,22 +46,74 @@
   </div>
 </script>
 
-<script type="text/ng-template" id="contents/team.html">
+<script type="text/ng-template" id="contents/spy.html">
+  <h2>スパイ決め</h2>
+  <a href="javascript:void(0)" ng-click="modalShow = true">スパイを決める</a><br>
   <div ng-show="!modalShow">
-    <a class="dividion__btn" href="javascript:void(0)" ng-click="modalShow = true">チームを自動で分ける</a><br>
-    <p ng-show="!shuffledTeam">まだチームが作成されていません。<br>メンバーの名前をタップすると、所属チームを変更することができます。</p>
-    <p ng-show="shuffledTeam">以下のように割り振りされました。<br>メンバーの名前をタップすると、所属チームを変更することができます。</p>
-    <div ng-show="shuffledTeam" class="teams">
+    <div class="teams">
       <div class="team  team--red">
-        <div class="team__amount">赤: {{shuffledTeam.first.length}}人</div>
+        <div class="team__amount">赤: {{teams.first.length}}人</div>
+        <a ng-show="isSpyAssigned" ng-click="checkSpy('first')" href="javascript:void(0)">スパイを確認する</a>
         <ul class="members">
-          <li class="members__member" ng-repeat="member in shuffledTeam.first">{{member.name}}</li>
+          <li class="members__member" ng-repeat="member in teams.first">{{member.name}}</li>
         </ul>
       </div>
       <div class="team  team--yellow">
-        <div class="team__amount">赤: {{shuffledTeam.second.length}}人</div>
+        <div class="team__amount">黄: {{teams.second.length}}人</div>
+        <a ng-show="isSpyAssigned" ng-click="checkSpy('second')" href="javascript:void(0)">スパイを確認する</a>
         <ul class="members">
-          <li class="members__member" ng-repeat="member in shuffledTeam.second">{{member.name}}</li>
+          <li class="members__member" ng-repeat="member in teams.second">{{member.name}}</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div ng-show="modalShow" class="modal">
+    スパイを決めますか？<br>
+    <a ng-click="assignSpy()" href="javascript:void(0)">決める</a>
+    <a ng-click="modalShow = !modalShow" href="javascript:void(0)">キャンセル</a>
+  </div>
+
+  <div ng-show="showFirstSpy">
+    <div ng-show="!showSpy">
+      あなたは赤チームですか？<br>
+      <a ng-click="showSpy = !showSpy" href="javascript:void(0)">はい</a>
+    </div>
+    <div ng-show="showSpy">
+      黄チームのスパイは{{teams.spy.first.name}}さんです<br>
+      <a ng-click="closeSpyModal()" href="javascript:void(0)">閉じる</a>
+    </div>
+  </div>
+
+  <div ng-show="showSecondSpy">
+    <div ng-show="!showSpy">
+      あなたは黄チームですか？<br>
+      <a ng-click="showSpy = !showSpy" href="javascript:void(0)">はい</a>
+    </div>
+    <div ng-show="showSpy">
+      赤チームのスパイは{{teams.spy.second.name}}さんです<br>
+      <a ng-click="closeSpyModal()" href="javascript:void(0)">閉じる</a>
+    </div>
+  </div>
+</script>
+
+<script type="text/ng-template" id="contents/team.html">
+  <h2>チーム分け</h2>
+  <div ng-show="!modalShow">
+    <a class="dividion__btn" href="javascript:void(0)" ng-click="modalShow = true">チームを自動で分ける</a><br>
+    <p ng-show="!initTeam">まだチームが作成されていません。<br>メンバーの名前をタップすると、所属チームを変更することができます。</p>
+    <p ng-show="initTeam">以下のように割り振りされました。<br>メンバーの名前をタップすると、所属チームを変更することができます。</p>
+    <div ng-show="initTeam" class="teams">
+      <div class="team  team--red">
+        <div class="team__amount">赤: {{teams.first.length}}人</div>
+        <ul class="members">
+          <li class="members__member" ng-repeat="member in teams.first">{{member.name}}</li>
+        </ul>
+      </div>
+      <div class="team  team--yellow">
+        <div class="team__amount">黄: {{teams.second.length}}人</div>
+        <ul class="members">
+          <li class="members__member" ng-repeat="member in teams.second">{{member.name}}</li>
         </ul>
       </div>
     </div>

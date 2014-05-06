@@ -1,19 +1,20 @@
 <script type="text/ng-template" id="contents/team.html">
+  <h2>チーム分け</h2>
   <div ng-show="!modalShow">
     <a class="dividion__btn" href="javascript:void(0)" ng-click="modalShow = true">チームを自動で分ける</a><br>
-    <p ng-show="!shuffledTeam">まだチームが作成されていません。<br>メンバーの名前をタップすると、所属チームを変更することができます。</p>
-    <p ng-show="shuffledTeam">以下のように割り振りされました。<br>メンバーの名前をタップすると、所属チームを変更することができます。</p>
-    <div ng-show="shuffledTeam" class="teams">
+    <p ng-show="!initTeam">まだチームが作成されていません。<br>メンバーの名前をタップすると、所属チームを変更することができます。</p>
+    <p ng-show="initTeam">以下のように割り振りされました。<br>メンバーの名前をタップすると、所属チームを変更することができます。</p>
+    <div ng-show="initTeam" class="teams">
       <div class="team  team--red">
-        <div class="team__amount">赤: {{shuffledTeam.first.length}}人</div>
+        <div class="team__amount">赤: {{teams.first.length}}人</div>
         <ul class="members">
-          <li class="members__member" ng-repeat="member in shuffledTeam.first">{{member.name}}</li>
+          <li class="members__member" ng-repeat="member in teams.first">{{member.name}}</li>
         </ul>
       </div>
       <div class="team  team--yellow">
-        <div class="team__amount">赤: {{shuffledTeam.second.length}}人</div>
+        <div class="team__amount">黄: {{teams.second.length}}人</div>
         <ul class="members">
-          <li class="members__member" ng-repeat="member in shuffledTeam.second">{{member.name}}</li>
+          <li class="members__member" ng-repeat="member in teams.second">{{member.name}}</li>
         </ul>
       </div>
     </div>

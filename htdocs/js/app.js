@@ -12,39 +12,102 @@
       }).when('/team/', {
         templateUrl: 'contents/team.html',
         controller: 'Team'
+      }).when('/spy/', {
+        templateUrl: 'contents/spy.html',
+        controller: 'Spy'
       });
     }
   ]);
 
-  kitd.controller('Team', [
-    '$scope', 'members', function($scope, members) {
-      this.members = members;
-      $scope.members = this.members;
+  kitd.controller('Spy', [
+    '$scope', 'members', 'teams', function($scope, members, teams) {
+      $scope.members = members;
+      teams.shuffle();
+      $scope.teams = teams;
+      console.log($scope.teams);
       $scope.modalShow = false;
-      $scope.shuffledTeam = null;
-      return $scope.shuffleMembers = function(members) {
-        var count, first, second, _ref;
-        if (members == null) {
-          members = this.members;
+      $scope.showFirstSpy = false;
+      $scope.showSecondSpy = false;
+      $scope.isSpyAssigned = false;
+      $scope.assignSpy = function() {
+        teams.assignSpy();
+        console.log(teams);
+        $scope.isSpyAssigned = true;
+        if ($scope.modalShow) {
+          return $scope.modalShow = false;
         }
-        members = _.shuffle(members);
-        count = 0;
-        _ref = _.partition(members, (function(_this) {
-          return function() {
-            count++;
-            return (count % 2) === 1;
-          };
-        })(this)), first = _ref[0], second = _ref[1];
-        $scope.shuffledTeam = {
-          first: first,
-          second: second
-        };
+      };
+      $scope.checkSpy = function(team) {
+        if (team === 'first') {
+          return $scope.showFirstSpy = true;
+        } else {
+          return $scope.showSecondSpy = true;
+        }
+      };
+      return $scope.closeSpyModal = function() {
+        $scope.showSpy = false;
+        $scope.showFirstSpy = false;
+        return $scope.showSecondSpy = false;
+      };
+    }
+  ]);
+
+  kitd.controller('Team', [
+    '$scope', 'members', 'teams', function($scope, members, teams) {
+      $scope.members = members;
+      $scope.teams = teams;
+      $scope.modalShow = false;
+      $scope.initTeam = false;
+      return $scope.shuffleMembers = function() {
+        if (!$scope.initTeam) {
+          $scope.initTeam = true;
+        }
+        teams.shuffle();
         if ($scope.modalShow) {
           return $scope.modalShow = false;
         }
       };
     }
   ]);
+
+  kitd.factory('teams', function(members) {
+    var Teams;
+    Teams = (function() {
+      function Teams() {
+        this.first = null;
+        this.second = null;
+        this.spy = {};
+      }
+
+      Teams.prototype.shuffle = function() {
+        var count, _members, _ref;
+        _members = _.shuffle(members);
+        count = 0;
+        return _ref = _.partition(_members, (function(_this) {
+          return function() {
+            count++;
+            return (count % 2) === 1;
+          };
+        })(this)), this.first = _ref[0], this.second = _ref[1], _ref;
+      };
+
+      Teams.prototype.assignSpy = function() {
+        this.spy.first = _.sample(this.first);
+        return this.spy.second = _.sample(this.second);
+      };
+
+      Teams.prototype.toObj = function() {
+        return {
+          first: this.first,
+          second: this.second
+        };
+      };
+
+      return Teams;
+
+    })();
+    return new Teams();
+  });
 
   kitd.controller('Main', [
     '$scope', 'members', function($scope, members) {
