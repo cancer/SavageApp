@@ -13,7 +13,7 @@
         templateUrl: 'contents/team.jade',
         controller: 'Team'
       }).when('/spy/', {
-        templateUrl: 'contents/spy.html',
+        templateUrl: 'contents/spy.jade',
         controller: 'Spy'
       });
     }

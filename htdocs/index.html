@@ -53,17 +53,17 @@
         <div ng-class="{ 'is--visible': modalShow, 'is--hidden': !modalShow }" class="modal">(TODO: ほんとはモーダルだよ)<br>チームのシャッフルを行います。よろしいですか？<br><a ng-click="shuffleMembers()" href="javascript:void(0)">シャッフルする</a><a ng-click="modalShow = !modalShow" href="javascript:void(0)">キャンセル</a></div></div>
       </script>
       <script id="contents/spy.jade" type="text/ng-template">
-        <h2>スパイ決め</h2><a ng-click="modalShow = true" href="javascript:void(0)">スパイを決める</a><br>
+        <h2>スパイ決め</h2>
         <div ng-show="!modalShow">
           <div class="teams">
             <div class="team team--rea">
-              <div class="team__amount">赤: {{teams.first.length}}人</div><a ng-show="isSpyAssigned" ng-click="checkSpy('first')" href="javascript:void(0)">スパイを確認する</a>
+              <div class="team__amount">赤: {{teams.first.length}}人</div><a ng-click="assignRole('first')" href="javascript:void(0)">スパイを決める</a><br><a ng-click="checkSpy('first')" href="javascript:void(0)">スパイを確認する</a>
               <ul class="members">
                 <li ng-repeat="member in teams.first" class="members__member">{{member.name}}</li>
               </ul>
             </div>
             <div class="team team--yellow">
-              <div class="team__amount">黄: {{teams.second.length}}人</div><a ng-show="isSpyAssigned" ng-click="checkSpy('second')" href="javascript:void(0)">スパイを確認する</a>
+              <div class="team__amount">黄: {{teams.second.length}}人</div><a ng-click="assignRole('second')" href="javascript:void(0)">スパイを決める</a><br><a ng-click="checkSpy('second')" href="javascript:void(0)">スパイを確認する</a>
               <ul class="members">
                 <li ng-repeat="member in teams.second" class="members__member">{{member.name}}</li>
               </ul>
@@ -79,6 +79,36 @@
           <div ng-show="!showSpy">あなたは黄チームですか？<br><a ng-click="showSpy = !showSpy" href="javascript:void(0)">はい</a></div>
           <div ng-show="showSpy">赤チームのスパイは{{teams.spy.second.name}}さんです<br><a ng-click="closeSpyModal()" href="javascript:void(0)">閉じる</a></div>
         </div>
+        <div ng-show="showFirstRole">
+          <div ng-show="!showRole &amp;&amp; !shownRole">
+            <h3>赤チームのスパイを決めます</h3>
+            <p>{{identifier.name}}さん<br>他の人に見えないように自分の役割を確認して下さい</p><a ng-click="showRole = true" href="javascript:void(0)">自分の役割を確認する</a>
+          </div>
+          <div ng-show="showRole">
+            <h3>赤チームのスパイを決めます</h3>
+            <p>{{identifier.name}}さんの役割は<br><strong ng-show="identifier.isSpy">あなたはスパイです</strong><strong ng-show="!identifier.isSpy">あなたはスパイではありません</strong></p><a ng-click="nextRole()" href="javascript:void(0)">次の人へ</a>
+          </div>
+          <div ng-show="showRole">
+            <h3>赤チームのスパイが決まりました</h3>
+            <p>黄チームの人に渡してください<br>赤チームの人は下のボタンを押さないでください</p><a ng-click="assignRole('second')" href="javascript:void(0)">黄チームのスパイを決める</a>
+          </div>
+        </div>
+        <div class="showSecondRole">
+          <div ng-show="!showRole &amp;&amp; !shownRole">
+            <h3>黄チームのスパイを決めます</h3>
+            <p>{{identifier.name}}さん<br>他の人に見えないように自分の役割を確認して下さい</p><a ng-click="showRole = true" href="javascript:void(0)">自分の役割を確認する</a>
+          </div></div>
+          <div ng-show="showRole">
+            <h3>黄チームのスパイを決めます</h3>
+            <p>{{identifier.name}}さんの役割は<br><strong ng-show="identifier.isSpy">あなたはスパイです</strong><strong ng-show="!identifier.isSpy">あなたはスパイではありません</strong></p><a ng-click="nextRole()" href="javascript:void(0)">次の人へ</a>
+          </div>
+          <div ng-show="showRole">
+            <h3>
+              黄チームのスパイが決まりました
+              赤チームの人に渡してください<br>黄チームの人は下のボタンを押さないでください
+            </h3><a ng-click="assignRole('first')" href="javascript:void(0)">赤チームのスパイを決める</a>
+          </div></div>
+        </div></div>
       </script>
     </div>
   </body>
