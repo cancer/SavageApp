@@ -24,14 +24,21 @@ module.exports = (grunt) ->
           'bower_components/ratchet/dist/js/ratchet.js'
         ]
         dest: 'htdocs/js/vendor.js'
-      html:
-        src: [
-          'template/head.html'
-          'template/contents/**/*.html'
-          'template/contents.html'
-          'template/foot.html'
+
+    jade:
+      compile:
+        options:
+          pretty: true
+        files: [
+          expand: true
+          cwd: 'template/'
+          src: [
+            '**/*.jade'
+            '!contents/*.jade'
+          ]
+          dest: 'htdocs/'
+          ext: '.html'
         ]
-        dest: 'htdocs/index.html'
 
     compass:
       options:
@@ -62,10 +69,10 @@ module.exports = (grunt) ->
       compass:
         files: ['scss/**/*.scss']
         tasks: ['compass']
-      concat:
-        files: ['template/**/*.html']
-        tasks: ['concat:html']
+      jade:
+        files: ['template/**/*.jade']
+        tasks: ['jade:compile']
 
-  grunt.registerTask 'build', ['coffee', 'concat', 'compass']
+  grunt.registerTask 'build', ['coffee', 'concat', 'jade', 'compass']
 
   grunt.registerTask 'default', ['connect', 'watch']
