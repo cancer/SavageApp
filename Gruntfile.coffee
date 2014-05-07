@@ -8,22 +8,10 @@ module.exports = (grunt) ->
         files:
           'htdocs/js/app.js': [
             'coffee/app.coffee'
-            'coffee/controler/**/*.coffee"'
-            'coffee/directive/**/*.coffee'
+            'coffee/services/**/*.coffee'
+            'coffee/directives/**/*.coffee'
+            'coffee/controllers/**/*.coffee'
           ]
-
-    concat:
-      vendorjs:
-        options:
-          separator: ';'
-        src: [
-          'bower_components/angular/angular.js'
-          'bower_components/angular-route/angular-route.js'
-          'bower_components/jquery/dist/jquery.js'
-          'bower_components/underscore/underscore.js'
-          'bower_components/ratchet/dist/js/ratchet.js'
-        ]
-        dest: 'htdocs/js/vendor.js'
 
     jade:
       compile:
@@ -40,7 +28,36 @@ module.exports = (grunt) ->
           ext: '.html'
         ]
 
+    compass:
+      options:
+        bundleExec: true
+        config: 'config.rb'
+      product:
+        options:
+          environment: 'production'
+
+    concat:
+      vendorjs:
+        options:
+          separator: ';'
+        src: [
+          'bower_components/angular/angular.js'
+          'bower_components/angular-route/angular-route.js'
+          'bower_components/angular-touch/angular-touch.js'
+          'bower_components/jquery/dist/jquery.js'
+          'bower_components/underscore/underscore.js'
+          'bower_components/ratchet/dist/js/ratchet.js'
+        ]
+        dest: 'htdocs/js/vendor.js'
+
     copy:
+      css:
+        nonull: true
+        expand: true
+        cwd: 'bower_components/'
+        src: ['ratchet/dist/css/ratchet.min.css']
+        dest: 'htdocs/css/'
+        flatten: true
       font:
         files: [
           expand: true
@@ -50,13 +67,11 @@ module.exports = (grunt) ->
           filter: 'isFile'
         ]
 
-    compass:
-      options:
-        bundleExec: true
-        config: 'config.rb'
-      product:
-        options:
-          environment: 'production'
+    shell:
+      option:
+        stdout: true
+      bower:
+        command: 'bower install'
 
     connect:
       server:
@@ -83,6 +98,7 @@ module.exports = (grunt) ->
         files: ['template/**/*.jade']
         tasks: ['jade:compile']
 
-  grunt.registerTask 'build', ['copy', 'coffee', 'concat', 'jade', 'compass']
+  grunt.registerTask 'bower', ['shell:bower', 'concat:vendorjs']
+  grunt.registerTask 'build', ['coffee', 'bower', 'copy', 'jade', 'compass']
 
   grunt.registerTask 'default', ['copy', 'connect', 'watch']

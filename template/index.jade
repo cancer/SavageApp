@@ -5,16 +5,17 @@ html(lang="ja", ng-app="kitd")
     meta(name="viewport", content="width=device-width, initial-scale=1.0, user-scalable=no")
     meta(http-equiv="Cache-Control", content="no-cache")
     meta(http-equiv="Pragma", content="no-cache")
+    link(href="css/ratchet.min.css", rel="stylesheet")
     link(href="css/app.css", rel="stylesheet")
     script(src="js/vendor.js")
     script(src="js/app.js")
     title SavageApp
   body
 
-    .bar(class="bar-nav")
+    .bar.bar-nav
       h1.title SavageApp
 
-    .content(ng-view, class="content-padded")
+    .content.content-padded(ng-view)
       script(id="main.jade", type="text/ng-template")
         include contents/main.jade
       script(id="contents/team.jade", type="text/ng-template")
@@ -22,14 +23,14 @@ html(lang="ja", ng-app="kitd")
       script(id="contents/spy.jade", type="text/ng-template")
         include contents/spy.jade
 
-    .bar(class="bar-tab")
-      a.tab-item(class="active", href="#/")
-        span.icon(class="icon-home")
+    .bar.bar-tab
+      a.tab-item.active(href="#/")
+        span.icon.icon-home
         span.tab-label メンバー
       a.tab-item(class="", href="#/team/")
-        span.icon(class="icon-list")
+        span.icon.icon-list
         span.tab-label チーム分け
       a.tab-item(class="", href="#/spy/")
-        span.icon(class="icon-person")
+        span.icon.icon-person
         span.tab-label スパイ戦
 
