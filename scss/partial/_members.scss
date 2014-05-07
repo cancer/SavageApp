@@ -1,0 +1,84 @@
+//# メンバーリスト
+.members {
+  @extend .table-view;
+}
+//メンバーリストの各行
+.members__member {
+  @extend .table-view-cell;
+  padding-right: 11px;
+}
+//メンバーの概要
+.members__summary {
+  display: table;
+  width: 100%;
+}
+//名前
+.members__name {
+  display: table-cell;
+  width: 25%;
+  vertical-align: middle;
+}
+//参加状態と編集ボタン
+.members__state {
+  display: table-cell;
+  text-align: right;
+  vertical-align: middle;
+}
+.members__state-item {
+  display: inline-block;
+  vertical-align: middle;
+  padding-left: 10px;
+}
+//参加状態の切り替えボタン
+.members__btn-toggle {
+  width: 90px;
+  &:before{
+    content: attr(data-isntAwakenLabel);
+  }
+  &.active {
+    &:before {
+      content: attr(data-isAwakenLabel);
+    }
+    .toggle-handle {
+      -webkit-transform: translate3d(60px, 0, 0);
+      transform: translate3d(60px, 0, 0);
+    }
+  }
+}
+//編集ボタン
+.members__btn-edit {
+}
+//メンバーの編集
+.members-form {
+}
+//メンバー編集フォームの各行
+.members-form__row {
+  display: table;
+  width: 100%;
+  margin-bottom: 20px;
+}
+//メンバー編集フォームのラベル
+.members-form__label {
+  display: table-cell;
+  width: 25%;
+  padding-right: 10px;
+  vertical-align: middle;
+}
+//メンバー編集フォームの値
+.members-form__value {
+  display: table-cell;
+  input[type="text"] {
+    margin-bottom: 0;
+  }
+}
+//メンバー編集フォームのボタン
+.members-form__btns {
+  display: table;
+  table-layout: fixed;
+  width: 100%;
+}
+.members-form__btns-item {
+  display: table-cell;
+  padding: 0 5px;
+}
+
