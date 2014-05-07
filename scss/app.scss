@@ -1,5 +1,7 @@
 @import 'compass';
 @import 'compass/reset';
+@import '../bower_components/ratchet/sass/ratchet.scss';
+@import 'partial/members';
 
 .is--visible {
   display: block;

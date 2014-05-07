@@ -10,11 +10,26 @@ html(lang="ja", ng-app="kitd")
     script(src="js/app.js")
     title SavageApp
   body
-    h1 Hello SavageApp!!
-    .wrap(ng-view)
+
+    .bar(class="bar-nav")
+      h1.title SavageApp
+
+    .content(ng-view, class="content-padded")
       script(id="main.jade", type="text/ng-template")
         include contents/main.jade
       script(id="contents/team.jade", type="text/ng-template")
         include contents/team.jade
       script(id="contents/spy.jade", type="text/ng-template")
         include contents/spy.jade
+
+    .bar(class="bar-tab")
+      a.tab-item(class="active", href="#/")
+        span.icon(class="icon-home")
+        span.tab-label メンバー
+      a.tab-item(class="", href="#/team/")
+        span.icon(class="icon-list")
+        span.tab-label チーム分け
+      a.tab-item(class="", href="#/spy/")
+        span.icon(class="icon-person")
+        span.tab-label スパイ戦
+
