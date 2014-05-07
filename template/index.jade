@@ -5,12 +5,15 @@ html(lang="ja", ng-app="kitd")
     meta(name="viewport", content="width=device-width, initial-scale=1.0, user-scalable=no")
     meta(http-equiv="Cache-Control", content="no-cache")
     meta(http-equiv="Pragma", content="no-cache")
+    link(href="css/ratchet.min.css", rel="stylesheet")
     link(href="css/app.css", rel="stylesheet")
     script(src="js/vendor.js")
     script(src="js/app.js")
     title SavageApp
   body
-    h1 Hello SavageApp!!
+    header
+      .bar.bar-nav
+        h1.title Hello SavageApp!!
     .wrap(ng-view)
       script(id="main.jade", type="text/ng-template")
         include contents/main.jade
@@ -18,3 +21,15 @@ html(lang="ja", ng-app="kitd")
         include contents/team.jade
       script(id="contents/spy.jade", type="text/ng-template")
         include contents/spy.jade
+    footer
+      // TODO: directiveにする
+      nav.bar.bar-tab
+        a.tab-item(href="#/")
+          span.icon.icon-home
+          span.tab-label main
+        a.tab-item(href="#/team/")
+          span.icon.icon-person
+          span.tab-label team
+        a.tab-item(href="#/spy/")
+          span.icon.icon-star
+          span.tab-label spy

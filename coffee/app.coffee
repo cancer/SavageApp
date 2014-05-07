@@ -1,5 +1,5 @@
 'use strict'
-@kitd = kitd = angular.module 'kitd', ['ngRoute']
+@kitd = kitd = angular.module 'kitd', ['ngRoute', 'ngTouch']
 
 #kitd.run()
 
@@ -111,16 +111,17 @@ kitd.factory 'teams', (members) ->
 
   new Teams()
 
-kitd.controller 'Main', ['$scope', 'members', ($scope, @members) ->
-  console.log @members
-  $scope.members = @members
+kitd.controller 'Main', ['$scope', 'members', ($scope, members) ->
+  $scope.members = members
 
-  $scope.showEdit = (member) ->
-    console.log member
+  $scope.showEdit = (member, $event) ->
+    $event.preventDefault()
+    $event.stopPropagation()
     member.isEditorShow = true
 
-  $scope.hideEdit = (member) ->
-    console.log member
+  $scope.hideEdit = (member, $event) ->
+    $event.preventDefault()
+    $event.stopPropagation()
     member.isEditorShow = false
 
   $scope.save = (member) ->
@@ -133,11 +134,14 @@ kitd.controller 'Main', ['$scope', 'members', ($scope, @members) ->
 
   $scope.awakenMembers = null
 
-  $scope.createWakeUpMail = () ->
-    members = []
-    _.each @members, (member) ->
-      members.push(member.name) if member.isAwaken
-    $scope.awakenMembers = members
+  $scope.createWakeUpMail = ($event) ->
+    $event.preventDefault()
+    $event.stopPropagation()
+    awaken = []
+    _.each members, (member) ->
+      awaken.push(member.name) if member.isAwaken
+    $scope.awakenMembers = awaken
+    console.log $scope.awakenMembers
 ]
 
 kitd.factory 'members', ->

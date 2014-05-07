@@ -1,5 +1,11 @@
 @import 'compass';
-@import 'compass/reset';
+
+$base--soft--sides: 12px;
+.wrap {
+  $header--height: 44px;
+  $footer--height: 50px;
+  padding: $header--height $base--soft--sides $footer--height;
+}
 
 .is--visible {
   display: block;

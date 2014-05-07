@@ -1,7 +1,7 @@
 h2 メンバーリスト
-ul.members
-  li.members__member(ng-repeat="member in members")
-    .members__summary(ng-show="!member.isEditorShow")
+ul.table-view
+  li(ng-repeat="member in members")
+    .table-view-cell(ng-show="!member.isEditorShow")
       span.members__name--summary {{member.name}}
       input.members__state--awake(
         type="checkbox"
@@ -9,18 +9,25 @@ ul.members
         ng-click="member.isAwaken=!member.isAwaken"
         ng-model="member.isAwaken"
       )
-      a.members__edit(ng-click="showEdit(member)", href="javascript:void(0)") 編集
+      a.btn.btn-primary(
+        ng-click="showEdit(member, $event)"
+        ng-show="!member.isEditorShow"
+        href=""
+      ) 編集
     .members__edit(ng-show="member.isEditorShow")
-      | 名前：
-      input(ng-model="member.name", type="text")
-      br
-      span(ng-show="member.isAwaken") 起きてる
-      span(ng-show="!member.isAwaken") まだ寝てる
-      a(ng-click="save(member)"    , href="javascript:void(0)") 変更する
-      a(ng-click="delete(member)"  , href="javascript:void(0)") メンバーを削除
-      a(ng-click="hideEdit(member)", href="javascript:void(0)") 閉じる
-div
-  a(ng-click="createWakeUpMail()", href="javascript:void(0)") 起床メールを作成する
-.members--awaken(ng-show="awakenMembers")
-  div(ng-repeat="member in awakenMembers") {{member}}
+      .input-group
+        .input-row
+          label 名前
+          input(ng-model="member.name", type="text")
+      p
+        span(ng-show="member.isAwaken") 起きてる
+        span(ng-show="!member.isAwaken") まだ寝てる
+      nav
+        a.btn.btn-positive(ng-click="save(member, $event)"    , href="javascript:void(0)") 変更する
+        a.btn.btn-negative(ng-click="delete(member, $event)"  , href="javascript:void(0)") メンバーを削除
+        a.btn.btn-primary(ng-click="hideEdit(member, $event)", href="javascript:void(0)") 閉じる
+a.btn.btn-positive.btn-block(ng-click="createWakeUpMail($event)", href="") 起床メールを作成する
+p.members--awaken(ng-show="awakenMembers")
+  span(ng-repeat="member in awakenMembers") {{member}}
+    br
 
