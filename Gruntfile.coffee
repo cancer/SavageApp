@@ -8,8 +8,9 @@ module.exports = (grunt) ->
         files:
           'htdocs/js/app.js': [
             'coffee/app.coffee'
-            'coffee/controler/**/*.coffee"'
-            'coffee/directive/**/*.coffee'
+            'coffee/services/**/*.coffee'
+            'coffee/directives/**/*.coffee'
+            'coffee/controllers/**/*.coffee'
           ]
 
     jade:
