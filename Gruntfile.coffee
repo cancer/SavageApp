@@ -40,6 +40,16 @@ module.exports = (grunt) ->
           ext: '.html'
         ]
 
+    copy:
+      font:
+        files: [
+          expand: true
+          flatten: true
+          src: 'bower_components/ratchet/fonts/*'
+          dest: 'htdocs/fonts/'
+          filter: 'isFile'
+        ]
+
     compass:
       options:
         bundleExec: true
@@ -73,6 +83,6 @@ module.exports = (grunt) ->
         files: ['template/**/*.jade']
         tasks: ['jade:compile']
 
-  grunt.registerTask 'build', ['coffee', 'concat', 'jade', 'compass']
+  grunt.registerTask 'build', ['copy', 'coffee', 'concat', 'jade', 'compass']
 
-  grunt.registerTask 'default', ['connect', 'watch']
+  grunt.registerTask 'default', ['copy', 'connect', 'watch']
