@@ -12,19 +12,6 @@ module.exports = (grunt) ->
             'coffee/directive/**/*.coffee'
           ]
 
-    concat:
-      vendorjs:
-        options:
-          separator: ';'
-        src: [
-          'bower_components/angular/angular.js'
-          'bower_components/angular-route/angular-route.js'
-          'bower_components/jquery/dist/jquery.js'
-          'bower_components/underscore/underscore.js'
-          'bower_components/ratchet/dist/js/ratchet.js'
-        ]
-        dest: 'htdocs/js/vendor.js'
-
     jade:
       compile:
         options:
@@ -47,6 +34,42 @@ module.exports = (grunt) ->
       product:
         options:
           environment: 'production'
+
+    concat:
+      vendorjs:
+        options:
+          separator: ';'
+        src: [
+          'bower_components/angular/angular.js'
+          'bower_components/angular-route/angular-route.js'
+          'bower_components/angular-touch/angular-touch.js'
+          'bower_components/jquery/dist/jquery.js'
+          'bower_components/underscore/underscore.js'
+          'bower_components/ratchet/dist/js/ratchet.js'
+        ]
+        dest: 'htdocs/js/vendor.js'
+
+    copy:
+      css:
+        nonull: true
+        expand: true
+        cwd: 'bower_components/'
+        src: ['ratchet/dist/css/ratchet.min.css']
+        dest: 'htdocs/css/'
+        flatten: true
+      font:
+        nonull: true
+        expand: true
+        cwd: 'bower_components/'
+        src: ['ratchet/dist/fonts/*.*']
+        dest: 'htdocs/fonts/'
+        flatten: true
+
+    shell:
+      option:
+        stdout: true
+      bower:
+        command: 'bower install'
 
     connect:
       server:
@@ -73,6 +96,7 @@ module.exports = (grunt) ->
         files: ['template/**/*.jade']
         tasks: ['jade:compile']
 
-  grunt.registerTask 'build', ['coffee', 'concat', 'jade', 'compass']
+  grunt.registerTask 'bower', ['shell:bower', 'concat:vendorjs']
+  grunt.registerTask 'build', ['coffee', 'bower', 'copy:css', 'jade', 'compass']
 
   grunt.registerTask 'default', ['connect', 'watch']

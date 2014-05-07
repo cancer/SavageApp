@@ -20,6 +20,7 @@
     "underscore": "~1.6.0",
     "angular": "~1.2.16",
     "ratchet": "~2.0.2",
-    "angular-route": "~1.2.16"
+    "angular-route": "~1.2.16",
+    "angular-touch": "~1.2.16"
   }
 }
