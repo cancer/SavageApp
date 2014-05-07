@@ -11,25 +11,26 @@ html(lang="ja", ng-app="kitd")
     script(src="js/app.js")
     title SavageApp
   body
-    header
-      .bar.bar-nav
-        h1.title Hello SavageApp!!
-    .wrap(ng-view)
+
+    .bar.bar-nav
+      h1.title SavageApp
+
+    .content.content-padded(ng-view)
       script(id="main.jade", type="text/ng-template")
         include contents/main.jade
       script(id="contents/team.jade", type="text/ng-template")
         include contents/team.jade
       script(id="contents/spy.jade", type="text/ng-template")
         include contents/spy.jade
-    footer
-      // TODO: directiveにする
-      nav.bar.bar-tab
-        a.tab-item(href="#/")
-          span.icon.icon-home
-          span.tab-label main
-        a.tab-item(href="#/team/")
-          span.icon.icon-person
-          span.tab-label team
-        a.tab-item(href="#/spy/")
-          span.icon.icon-star
-          span.tab-label spy
+
+    .bar.bar-tab
+      a.tab-item.active(href="#/")
+        span.icon.icon-home
+        span.tab-label メンバー
+      a.tab-item(class="", href="#/team/")
+        span.icon.icon-list
+        span.tab-label チーム分け
+      a.tab-item(class="", href="#/spy/")
+        span.icon.icon-person
+        span.tab-label スパイ戦
+

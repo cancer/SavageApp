@@ -1,11 +1,7 @@
 @import 'compass';
-
-$base--soft--sides: 12px;
-.wrap {
-  $header--height: 44px;
-  $footer--height: 50px;
-  padding: $header--height $base--soft--sides $footer--height;
-}
+@import 'compass/reset';
+@import '../bower_components/ratchet/sass/ratchet.scss';
+@import 'partial/members';
 
 .is--visible {
   display: block;

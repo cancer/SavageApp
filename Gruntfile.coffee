@@ -59,12 +59,13 @@ module.exports = (grunt) ->
         dest: 'htdocs/css/'
         flatten: true
       font:
-        nonull: true
-        expand: true
-        cwd: 'bower_components/'
-        src: ['ratchet/dist/fonts/*.*']
-        dest: 'htdocs/fonts/'
-        flatten: true
+        files: [
+          expand: true
+          flatten: true
+          src: 'bower_components/ratchet/fonts/*'
+          dest: 'htdocs/fonts/'
+          filter: 'isFile'
+        ]
 
     shell:
       option:
@@ -98,6 +99,6 @@ module.exports = (grunt) ->
         tasks: ['jade:compile']
 
   grunt.registerTask 'bower', ['shell:bower', 'concat:vendorjs']
-  grunt.registerTask 'build', ['coffee', 'bower', 'copy:css', 'jade', 'compass']
+  grunt.registerTask 'build', ['coffee', 'bower', 'copy', 'jade', 'compass']
 
-  grunt.registerTask 'default', ['connect', 'watch']
+  grunt.registerTask 'default', ['copy', 'connect', 'watch']
