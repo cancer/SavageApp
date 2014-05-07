@@ -1,33 +1,75 @@
 h2 チーム分け
 .division(ng-show="!modalShow")
-  a.division__btn(ng-click="modalShow = true", href="javascript:void(0)") チームを自動で分ける
-  br
-  p(ng-show="!initTeam")
-    | まだチームが作成されていません。
-    br
-    | メンバーの名前をタップすると、所属チームを変更することができます。
-  p(ng-show="initTeam")
-    | 以下のように割り振りされました。
-    br
-    | メンバーの名前をタップすると、所属チームを変更することができます。
+
+  div(ng-show="!initTeam")
+    p
+      | まだチームが作成されていません。
+    p
+      a.division__btn(
+        ng-click="modalShow = true",
+        href="javascript:void(0)"
+      )
+        span.icon.icon-refresh チームをシャッフルする
+
+  div(ng-show="initTeam")
+    p
+      | 以下のように割り振りされました。
+    p
+      a.division__btn(
+        ng-click="modalShow = true",
+        href="javascript:void(0)"
+      )
+        span.icon.icon-refresh チームを再度シャッフルする
+
   .teams(ng-show="initTeam")
-    .team(class="team--red")
-      .team__amount
-        | 赤：{{initTeam.first.length}}人
+    .teams__toggler
+      .teams__toggler-item.active(
+        ng-class="{ 'active': showFirstTeam, '': !showFirstTeam }"
+        ng-click="showFirstTeam = true; showSecondTeam = false"
+      ) 赤：{{initTeam.first.length}}人
+      .teams__toggler-item(
+        ng-class="{ 'active': showSecondTeam, '': !showSecondTeam }"
+        ng-click="showFirstTeam = false; showSecondTeam = true"
+      ) 黄：{{initTeam.second.length}}人
+
+    .teams__team.active(ng-class="{ 'active': showFirstTeam, '': !showFirstTeam }")
+      | red
       ul.members
         li.members__member(ng-repeat="member in initTeam.first")
-          | {{member.name}}
-    .team(class="team--yellow")
-      .team__amount
-        | 黄：{{initTeam.second.length}}人
+          .members__summary
+            .members__name {{member.name}}
+            .members__state
+              .members__state-item
+                .members__btn-changeTeam チーム移動
+
+    .teams__team(ng-class="{ 'active': showSecondTeam, '': !showSecondTeam }")
+      | yellow
       ul.members
         li.members__member(ng-repeat="member in initTeam.second")
-          | {{member.name}}
-.modal(ng-class="{ 'is--visible': modalShow, 'is--hidden': !modalShow }")
-  | (TODO: ほんとはモーダルだよ)
-  br
-  | チームのシャッフルを行います。よろしいですか？
-  br
-  a(ng-click="shuffleMembers()", href="javascript:void(0)") シャッフルする
-  a(ng-click="modalShow = !modalShow", href="javascript:void(0)") キャンセル
-</div>
+          .members__summary
+            .members__name {{member.name}}
+            .members__state
+              .members__state-item
+                .members__btn-changeTeam チーム移動
+
+.division-modal(ng-class="{ 'active': modalShow, '': !modalShow }")
+  .bar.bar-nav
+    h1.title チームシャッフル
+    a.icon.icon-close.pull-right
+  .content.content-padded
+    p
+      | チームのシャッフルを行います。
+      br
+      | よろしいですか？
+
+    a.division__btn-submit(
+      ng-click="shuffleMembers()",
+      href="javascript:void(0)"
+    )
+      span.icon.icon-refresh シャッフルする
+
+    a.division__btn-cancel(
+      ng-click="modalShow = !modalShow",
+      href="javascript:void(0)"
+    )
+      span.icon.icon-close キャンセル

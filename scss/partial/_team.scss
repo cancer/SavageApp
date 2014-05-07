@@ -1,0 +1,46 @@
+//#チームぎめ
+
+.division__btn {
+  @extend .btn;
+  @extend .btn-primary;
+  @extend .btn-block;
+  @extend .btn-outlined;
+}
+.division__btn-submit {
+  @extend .btn;
+  @extend .btn-positive;
+  @extend .btn-block;
+  @extend .btn-outlined;
+}
+.division__btn-cancel {
+  @extend .btn;
+  @extend .btn-negative;
+  @extend .btn-block;
+  @extend .btn-outlined;
+}
+
+//モーダル
+.division-modal {
+  @extend .modal;
+  left: 0;
+}
+
+//両方のチームリスト
+.teams { }
+
+//チーム切り替えタブ
+.teams__toggler {
+  @extend .segmented-control;
+  margin-bottom: 10px;
+}
+
+.teams__toggler-item {
+  @extend .control-item;
+}
+
+.teams__team {
+  display: none;
+  &.active {
+    display: block;
+  }
+}
