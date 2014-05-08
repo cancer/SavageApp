@@ -1,0 +1,98 @@
+//#スパイぎめ
+
+.spy-buttons {
+
+}
+
+.spy-buttons__btn-show {
+  @extend .btn;
+  @extend .btn-block;
+  @extend .btn-primary;
+  @extend .btn-outlined;
+}
+
+.spy-buttons__btn-assign {
+  @extend .btn;
+  @extend .btn-block;
+  @extend .btn-positive;
+  @extend .btn-outlined;
+}
+
+.spy-buttons__btn-next {
+  @extend .btn;
+  @extend .btn-block;
+  @extend .btn-outlined;
+}
+
+.spy-buttons__btn-cancel {
+  @extend .btn;
+  @extend .btn-block;
+  @extend .btn-negative;
+  @extend .btn-outlined;
+}
+
+.spy-buttons__btn-check {
+  @extend .btn;
+  @extend .btn-block;
+  @extend .btn-negative;
+  @extend .btn-outlined;
+}
+
+//スパイ決定モーダル
+.spy-modal {
+  @extend .modal;
+  left: 0;
+}
+.spy-modal__content {
+  @extend .content;
+  @extend .content-padded;
+}
+.spy-modal__heading {
+  text-align: center;
+}
+
+.spy-modal__name {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.spy-modal__text {
+  min-height: 30px;
+  margin-bottom: 10px;
+  font-size: 14px;
+  text-align: center;
+  strong {
+    font-size: 18px;
+    font-weight: bold;
+  }
+}
+
+.spy-modal__btn-show {
+  @extend .btn;
+  @extend .btn-block;
+  @extend .btn-primary;
+  @extend .btn-outlined;
+}
+
+.spy-modal__btn-next {
+  @extend .btn;
+  @extend .btn-block;
+  @extend .btn-outlined;
+}
+
+.spy-modal__btn-assign {
+  @extend .btn;
+  @extend .btn-block;
+  @extend .btn-positive;
+  @extend .btn-outlined;
+}
+
+.spy-modal__btn-cancel {
+  @extend .btn;
+  @extend .btn-block;
+  @extend .btn-negative;
+  @extend .btn-outlined;
+}
+
