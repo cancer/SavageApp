@@ -48,6 +48,10 @@
 //編集ボタン
 .members__btn-edit {
 }
+.members__btn-changeTeam {
+  @extend .btn;
+  @extend .btn-outlined;
+}
 //メンバーの編集
 .members-form {
 }
