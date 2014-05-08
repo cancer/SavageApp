@@ -1,31 +1,37 @@
 'use strict'
-kitd.factory 'teams', (members) ->
+kitd.factory 'teams', () ->
+  # FIXME: class Teamも作ったほうがいい
   class Teams
+    TEAM_LABELS = ['Red', 'Yellow']
     constructor: ->
-      @first = null
-      @second = null
-      @spy = []
+      @members = null
+      @list = _.map TEAM_LABELS, (val) ->
+        {label: val}
+
+    init: (members) ->
+      @members = members
+      @shuffle()
+
+    isInitialized: -> @members?
 
     shuffle: ->
-      _members = _.shuffle members
+      _members = _.shuffle @members
       count = 0
-      [@first, @second] = _.partition _members, =>
+      _list = _.partition _members, =>
         # 最後にカウントアップさせられない
         count++
         (count % 2) is 1
 
-    assignSpy: ->
-      @spy[0] = _.sample @first
-      @spy[1] = _.sample @second
-      _.each [@first, @second], (team, idx) =>
-        _.each team, (member) =>
-          member.isSpy = if member.name is @spy[idx].name then true else false
+      # 振り分けたmembersをlist[n].membersの形にする
+      # FIXME: もうちょっといい方法ないかな…
+      _.each _list, (members, idx) =>
+        @list[idx].members = members
 
-    toObj: ->
-      return {
-        first: @first
-        second: @second
-      }
+    assignSpy: ->
+      _.each @list, (team, idx) =>
+        team.spy = _.sample team.members
+        _.each team, (member, idx, team) =>
+          member.isSpy = if member.name is team.spy.name then true else false
 
   new Teams()
 
