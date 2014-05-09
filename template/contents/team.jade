@@ -22,14 +22,16 @@ h2 チーム分け
         span.icon.icon-refresh チームを再度シャッフルする
 
   .teams(ng-show="isInitializedTeam()")
-    .teams__toggler(ng-repeat="team in teams")
-      .teams__toggler-item(
+    .teams__toggler
+      a.teams__toggler-item(
         ng-class="{ 'active': team.showContent }"
-        ng-click="toggleTeamTab"
+        ng-click="toggleTeamTab()",
+        ng-repeat="team in teams",
+        href="javascript:void(0)"
       ) {{team.label}}：{{team.members.length}}人
 
-    .teams__team.active(
-      ng-class="{ 'active': showFirstTeam }",
+    .teams__team(
+      ng-class="{ 'active': team.showContent }",
       ng-repeat="team in teams"
     )
       | {{team.label}}
