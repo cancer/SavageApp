@@ -8,44 +8,29 @@ h2 スパイ決め
 
 .teams
   .teams__toggler
-    .teams__toggler-item.active(
-      ng-class="{ 'active': showFirstTeam, '': !showFirstTeam }"
-      ng-click="showFirstTeam = true; showSecondTeam = false"
-    ) 赤：{{teams.first.length}}人
-    .teams__toggler-item(
-      ng-class="{ 'active': showSecondTeam, '': !showSecondTeam }"
-      ng-click="showFirstTeam = false; showSecondTeam = true"
-    ) 黄：{{teams.second.length}}人
+    a.teams__toggler-item(
+      ng-repeat="team in teams",
+      ng-class="{ 'active': team.showContent }"
+      ng-click="toggleTeamTab()"
+    ) {{team.label}}：{{teams.length}}人
 
-  .teams__team.active(ng-class="{ 'active': showFirstTeam, '': !showFirstTeam }")
+  .teams__team(
+    ng-repeat="team in teams",
+    ng-class="{ 'active': team.showContent }"
+  )
     p 役割の確認を行い、その後相手チームにスパイを確認してもらってください。
     .spy-buttons
       a.spy-buttons__btn-assign(
-        ng-click="assignRole('first')",
-        href="javascript:void(0)"
-      ) 赤チームメンバーの役割を確認
+        ng-click="assignRole(team)",
+        href="#js-modal-assign-spy-{{team.label}}"
+      ) {{team.label}}チームメンバーの役割を確認
       a.spy-buttons__btn-check(
-        ng-click="checkSpy('first')",
+        ng-click="checkSpy(team)",
         href="javascript:void(0)"
-      ) 赤チームのスパイを確認
-    p 赤チームは以下のメンバーです
+      ) {{team.label}}チームのスパイを確認
+    p {{team.label}}チームは以下のメンバーです
     ul.members
-      li.members__member(ng-repeat="member in teams.first") {{member.name}}
-
-  .teams__team(ng-class="{ 'active': showSecondTeam, '': !showSecondTeam }")
-    p 役割の確認を行い、その後相手チームにスパイを確認してもらってください。
-    .spy-buttons
-      a.spy-buttons__btn-assign(
-        ng-click="assignRole('second')",
-        href="javascript:void(0)"
-      ) 黄チームメンバーの役割を確認
-      a.spy-buttons__btn-check(
-        ng-click="checkSpy('second')",
-        href="javascript:void(0)"
-      ) 黄チームのスパイを確認
-    p 黄チームは以下のメンバーです
-    ul.members
-      li.members__member(ng-repeat="member in teams.second") {{member.name}}
+      li.members__member(ng-repeat="member in team.members") {{member.name}}
 
 
 // スパイの再設定用モーダル

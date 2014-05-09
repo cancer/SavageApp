@@ -1,19 +1,21 @@
 'use strict'
-kitd.controller 'Spy', ['$scope', 'members','teams', ($scope, members, teams) ->
-  $scope.members = members
+kitd.controller 'Spy', ['$scope', 'members', 'teams', ($scope, members, teams) ->
   # TODO: まだ保存できないからシャッフルしちゃう
-  teams.shuffle()
-  $scope.teams = teams
+  if teams.isInitialized() then teams.shuffle() else teams.init(members)
+  $scope.teams = teams.list
+  $scope.teams[0].showContent = true
   console.log $scope.teams
   $scope.modalShow = false
-  $scope.showFirstSpy = false
-  $scope.showSecondSpy = false
   $scope.showFirstRole = false
   $scope.showSecondRole = false
   $scope.identifier = null
 
   # スパイを決める
   teams.assignSpy()
+
+  $scope.toggleTeamTab = ->
+    _.each $scope.teams, (team) ->
+      team.showContent = !team.showContent
 
   $scope.checkSpy = (team) ->
     if team is 'first'
@@ -23,6 +25,7 @@ kitd.controller 'Spy', ['$scope', 'members','teams', ($scope, members, teams) ->
 
   identifiers = null
   $scope.assignRole = (team) ->
+    return
     if team is 'first'
       $scope.showFirstRole = true
       identifiers = teams.first
