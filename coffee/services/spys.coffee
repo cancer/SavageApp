@@ -1,10 +1,10 @@
 'use strict'
 #Collection
-kitd.service 'spys', () ->
+kitd.service 'spys', ['spy', (spy) ->
   @data = []
 
-  @set = (spy) =>
-    @data.push spy
+  @set = (member) =>
+    @data.push spy.set member
 
   @getAt = (index) =>
     @data[index]
@@ -16,4 +16,5 @@ kitd.service 'spys', () ->
     spy = _.sample members
     spy.isSpy = true
     @set spy
+]
 

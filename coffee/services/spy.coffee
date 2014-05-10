@@ -5,6 +5,7 @@ kitd.service 'spy', () ->
 
   @set = (member) =>
     @data = member
+    @
 
   @get = (attr) =>
     @data[attr]
