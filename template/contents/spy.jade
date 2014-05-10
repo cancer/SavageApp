@@ -28,8 +28,9 @@ h2 スパイ決め
       ) {{currentTeam.label}}チームメンバーの役割を確認
       a.spy-buttons__btn-check(
         ng-repeat="friend in friends",
-        href="#js-modal-confirm-spy"
-      ) {{friend.team}}チームのスパイを確認
+        ng-click="initConfirmFriend(friend)",
+        href="#js-modal-confirm-friend"
+      ) {{friend.team.label}}チームのスパイを確認
 
 .teams(ng-show="!isAssignedSpy")
   p まずは上のボタンからスパイの選出を行ってください
@@ -72,39 +73,46 @@ ul.members
 
 
 // 赤チームのスパイ確認モーダル
-#js-modal-confirm-spy.spy-modal.modal
+#js-modal-confirm-friend.spy-modal.modal
   .bar.bar-nav
-    h1.title {{}}チームのスパイ確認
+    h1.title {{currentFriend.team.label}}チームのスパイ確認
 
-  .spy-modal__content(ng-show="!showSpy")
+  .spy-modal__content(ng-show="showFriendState == 'passed'")
     .spy-modal__heading
       h2 注意
     .spy-modal__text
       p
         | あなたは
-        strong 黄チーム
+        strong {{currentFriend.team.label}}チーム
         | ですか？
     .spy-buttons
-      a.spy-buttons__btn-show(
-        ng-click!="showSpy = !showSpy",
-        href="javascript:void(0)"
-      ) はい
       a.spy-buttons__btn-cancel(
-        ng-click!="closeSpyModal()",
+        href="#js-modal-confirm-friend"
+      ) はい
+      a.spy-buttons__btn-show(
+        ng-click="confirmFriend()",
         href="javascript:void(0)"
       ) いいえ
 
-  .spy-modal__content(ng-show="showSpy")
+  .spy-modal__content(ng-show="showFriendState == 'showing'")
     .spy-modal__heading
-      h2 赤チームのスパイは
+      h2 {{currentFriend.team.label}}チームのスパイは
     .spy-modal__text
       p
-        strong {{teams.spy.first.name}}
+        strong {{currentFriend.name}}
         | さんです
     .spy-buttons
       a.spy-buttons__btn-cancel(
-        ng-click!="closeSpyModal()",
-        href="javascript:void(0)"
+        href="#js-modal-confirm-friend"
+      ) 閉じる
+
+  .spy-modal__content(ng-show="showFriendState == 'complete'")
+    .spy-modal__text
+      p
+        | スパイの再確認をすることはできません
+    .spy-buttons
+      a.spy-buttons__btn-cancel(
+        href="#js-modal-confirm-friend"
       ) 閉じる
 
 // 黄チームのスパイ確認モーダル
@@ -185,6 +193,7 @@ ul.members
     .spy-modal__text
       p
         | 黄チームの人に渡してください
+        | 役割の再確認をすることはできません
     .spy-buttons
       a.spy-buttons__btn-cancel(
         href="#js-modal-role"

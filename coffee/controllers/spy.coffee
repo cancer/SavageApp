@@ -40,22 +40,34 @@ kitd.controller 'Spy', ['$scope', 'members', 'teams', 'spys', ($scope, members, 
       id: 1
       name: 'うの'
       isSpy: true
-      team: 'Yellow'
+      team:
+        name: 'yellow'
+        label: 'Yellow'
     ]
 
   # スパイを確認する
-  $scope.checkSpy = (team) ->
-    if team is 'first'
-      $scope.showFirstSpy = true
-    else
-      $scope.showSecondSpy = true
+  completedConfirmFriend = []
+
+  isCompleteConfirmFriend = (team) ->
+    _.contains completedConfirmFriend, team.name
+
+  $scope.initConfirmFriend = (friend) ->
+    $scope.showFriendState = if isCompleteConfirmFriend(friend.team) then 'complete' else 'passed'
+    $scope.currentFriend = friend
+
+  $scope.confirmFriend = () ->
+    completedConfirmFriend.push $scope.currentFriend.team.name
+    $scope.showFriendState = 'showing'
 
   # 役割を確認する
   currentPlayerIndex = 0
-  $scope.showRoleCompleted = []
+  showRoleCompleted = []
+
+  isCompleteShowRole = (team) ->
+    _.contains showRoleCompleted, team.name
 
   $scope.initShowRole = () ->
-    $scope.roleShowState = if isCompleteShowRole($scope.currentTeam.name) then 'complete' else 'passed'
+    $scope.roleShowState = if isCompleteShowRole($scope.currentTeam) then 'complete' else 'passed'
     $scope.currentPlayer = $scope.currentTeam.members[0]
     currentPlayerIndex = 0
 
@@ -69,8 +81,5 @@ kitd.controller 'Spy', ['$scope', 'members', 'teams', 'spys', ($scope, members, 
     $scope.showRoleCompleted.push $scope.currentTeam.name
     $scope.roleShowState = 'complete'
     console.log $scope.roleShowState
-
-  isCompleteShowRole = (name) ->
-    _.contains $scope.showRoleCompleted, name
 ]
 
