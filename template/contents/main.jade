@@ -61,7 +61,7 @@ ul.members
 
 
 a.mail-template__button-create(
-  ng-click="createWakeUpMail($event)"
+  ng-click="toggleMailForm($event)"
   ng-class="{'active': isMailFormShow}"
 )
   span 起床メール作成
@@ -78,27 +78,6 @@ a.mail-template__button-create(
   .mail-template__text
     p 選択ボタンをクリックするとテキストが選択されるので、コピーしてご利用ください。
   .mail-template__textarea
-    textarea(select-on-focus, readonly)
-      | ✌('ω'✌ )三✌('ω')✌三( ✌'ω')✌
-      |         朝起きた速報
-      | ✌('ω'✌ )三✌('ω')✌三( ✌'ω')✌
-      | 　
-      | user1
-      | user2
-      | user3
-      | user4
-      | 　
-      | ▂▅▇█▓▒░(’ω’)░▒▓█▅▂
-      |       まだ朝起きてない速報
-      | ▂▅▇█▓▒░(’ω’)░▒▓█▅▂
-      | 　
-      | user2
-      | user3
-      | user4
-      | user5
+    textarea(nt-select-on-focus, nt-mail-template-str, readonly)
   .mail-template__buttons
-    a.mail-template__button-select(select-on-click) テキストを選択する
-
-
-//.members--awaken(ng-show="awakenMembers")
-//  div(ng-repeat="member in awakenMembers") {{member}}
+    a.mail-template__button-select(nt-select-on-click) テキストを選択する
