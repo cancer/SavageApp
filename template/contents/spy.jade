@@ -2,11 +2,16 @@ h2 スパイ決め
 
 .spy-buttons
   a.spy-buttons__btn-assign(
-    ng-click="modalShow = true"
-    href="javascript:void(0)"
+    ng-show="!isAssignedSpy",
+    href="#js-modal-assign-spy"
   ) スパイを選出する
+  // FIXME: 色変える
+  a.spy-buttons__btn-assign(
+    ng-show="isAssignedSpy",
+    href="#js-modal-assign-spy"
+  ) スパイを再選出する
 
-.teams
+.teams(ng-show="isAssignedSpy")
   .teams__toggler
     a.teams__toggler-item(
       ng-repeat="team in teams",
@@ -33,23 +38,36 @@ h2 スパイ決め
       li.members__member(ng-repeat="member in team.members") {{member.name}}
 
 
-// スパイの再設定用モーダル
-.spy-modal(ng-class!="{ 'active':modalShow, '':!modalShow }")
+// スパイ設定用モーダル
+#js-modal-assign-spy.spy-modal.modal
   .bar.bar-nav
-    h1.title スパイの再選出
-  .spy-modal__content
-    .spy-modal__heading
-      h2 スパイを決め直します
-    .spy-modal__text
-      p 問題なければ「決め直す」ボタンを押してください
-    a.spy-modal__btn-show(
-      ng-click="assignSpy()",
-      href="javascript:void(0)"
-    ) 決め直す
-    a.spy-modal__btn-cancel(
-      ng-click="modalShow = !modalShow",
-      href="javascript:void(0)"
-    ) キャンセル
+    h1.title スパイの選出
+  div(ng-show="!isInitializedTeam()")
+    p
+    | チーム分けがされてません
+    | チーム分けをしてから再度行ってください
+  div(ng-show="isInitializedTeam() && !isAssignedSpy")
+    .spy-modal__content
+      .spy-modal__heading
+        h2 スパイを決定します
+      .spy-modal__text
+        p 問題なければ「スパイを決定する」ボタンを押してください
+      a.spy-modal__btn-show(
+        ng-click="assignSpy()",
+        href="#js-modal-assign-spy"
+      ) スパイを決定する
+      a.spy-modal__btn-cancel(href="#js-modal-assign-spy") キャンセル
+  div(ng-show="isInitializedTeam() && isAssignedSpy")
+    .spy-modal__content
+      .spy-modal__heading
+        h2 スパイを決め直します
+      .spy-modal__text
+        p 問題なければ「スパイを決め直す」ボタンを押してください
+      a.spy-modal__btn-show(
+        ng-click="assignSpy()",
+        href="#js-modal-assign-spy"
+      ) スパイを決め直す
+      a.spy-modal__btn-cancel(href="#js-modal-assign-spy") キャンセル
 
 
 // 赤チームのスパイ確認モーダル

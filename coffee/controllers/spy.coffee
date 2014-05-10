@@ -4,14 +4,18 @@ kitd.controller 'Spy', ['$scope', 'members', 'teams', ($scope, members, teams) -
   if teams.isInitialized() then teams.shuffle() else teams.init(members)
   $scope.teams = teams.list
   $scope.teams[0].showContent = true
-  console.log $scope.teams
-  $scope.modalShow = false
   $scope.showFirstRole = false
   $scope.showSecondRole = false
   $scope.identifier = null
+  $scope.isAssignedSpy = false
 
   # スパイを決める
-  teams.assignSpy()
+  $scope.assignSpy = ->
+    teams.assignSpy()
+    $scope.isAssignedSpy = true
+
+  $scope.isInitializedTeam = ->
+    teams.isInitialized()
 
   $scope.toggleTeamTab = ->
     _.each $scope.teams, (team) ->
