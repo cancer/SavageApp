@@ -2,174 +2,182 @@ h2 スパイ決め
 
 .spy-buttons
   a.spy-buttons__btn-assign(
-    ng-click="modalShow = true"
-    href="javascript:void(0)"
+    ng-show="!isAssignedSpy",
+    href="#js-modal-assign-spy"
   ) スパイを選出する
+  // FIXME: 色変える
+  a.spy-buttons__btn-assign(
+    ng-show="isAssignedSpy",
+    href="#js-modal-assign-spy"
+  ) スパイを再選出する
 
-.teams
+.teams(ng-show="isAssignedSpy")
   .teams__toggler
-    .teams__toggler-item.active(
-      ng-class="{ 'active': showFirstTeam, '': !showFirstTeam }"
-      ng-click="showFirstTeam = true; showSecondTeam = false"
-    ) 赤：{{teams.first.length}}人
-    .teams__toggler-item(
-      ng-class="{ 'active': showSecondTeam, '': !showSecondTeam }"
-      ng-click="showFirstTeam = false; showSecondTeam = true"
-    ) 黄：{{teams.second.length}}人
+    a.teams__toggler-item(
+      ng-repeat="team in teams",
+      ng-class="{ 'active': team.showContent }"
+      ng-click="toggleTeamTab(team)"
+    ) {{team.label}}：{{teams.length}}人
 
-  .teams__team.active(ng-class="{ 'active': showFirstTeam, '': !showFirstTeam }")
+  .teams__team.active
     p 役割の確認を行い、その後相手チームにスパイを確認してもらってください。
     .spy-buttons
       a.spy-buttons__btn-assign(
-        ng-click="assignRole('first')",
-        href="javascript:void(0)"
-      ) 赤チームメンバーの役割を確認
+        ng-click="initShowRole()",
+        href="#js-modal-role"
+      ) {{currentTeam.label}}チームメンバーの役割を確認
       a.spy-buttons__btn-check(
-        ng-click="checkSpy('first')",
-        href="javascript:void(0)"
-      ) 赤チームのスパイを確認
-    p 赤チームは以下のメンバーです
-    ul.members
-      li.members__member(ng-repeat="member in teams.first") {{member.name}}
+        ng-repeat="friend in friends",
+        ng-click="initConfirmFriend(friend)",
+        href="#js-modal-confirm-friend"
+      ) {{friend.team.label}}チームのスパイを確認
 
-  .teams__team(ng-class="{ 'active': showSecondTeam, '': !showSecondTeam }")
-    p 役割の確認を行い、その後相手チームにスパイを確認してもらってください。
-    .spy-buttons
-      a.spy-buttons__btn-assign(
-        ng-click="assignRole('second')",
-        href="javascript:void(0)"
-      ) 黄チームメンバーの役割を確認
-      a.spy-buttons__btn-check(
-        ng-click="checkSpy('second')",
-        href="javascript:void(0)"
-      ) 黄チームのスパイを確認
-    p 黄チームは以下のメンバーです
-    ul.members
-      li.members__member(ng-repeat="member in teams.second") {{member.name}}
+.teams(ng-show="!isAssignedSpy")
+  p まずは上のボタンからスパイの選出を行ってください
+
+p {{currentTeam.label}}チームは以下のメンバーです
+ul.members
+  li.members__member(ng-repeat="member in currentTeam.members") {{member.name}}
 
 
-// スパイの再設定用モーダル
-.spy-modal(ng-class!="{ 'active':modalShow, '':!modalShow }")
+// スパイ設定用モーダル
+#js-modal-assign-spy.spy-modal.modal
   .bar.bar-nav
-    h1.title スパイの再選出
-  .spy-modal__content
-    .spy-modal__heading
-      h2 スパイを決め直します
-    .spy-modal__text
-      p 問題なければ「決め直す」ボタンを押してください
-    a.spy-modal__btn-show(
-      ng-click="assignSpy()",
-      href="javascript:void(0)"
-    ) 決め直す
-    a.spy-modal__btn-cancel(
-      ng-click="modalShow = !modalShow",
-      href="javascript:void(0)"
-    ) キャンセル
+    h1.title スパイの選出
+  div(ng-show="!isInitializedTeam()")
+    p
+    | チーム分けがされてません
+    | チーム分けをしてから再度行ってください
+  div(ng-show="isInitializedTeam() && !isAssignedSpy")
+    .spy-modal__content
+      .spy-modal__heading
+        h2 スパイを決定します
+      .spy-modal__text
+        p 問題なければ「スパイを決定する」ボタンを押してください
+      a.spy-modal__btn-show(
+        ng-click="assignSpy()",
+        href="#js-modal-assign-spy"
+      ) スパイを決定する
+      a.spy-modal__btn-cancel(href="#js-modal-assign-spy") キャンセル
+  div(ng-show="isInitializedTeam() && isAssignedSpy")
+    .spy-modal__content
+      .spy-modal__heading
+        h2 スパイを決め直します
+      .spy-modal__text
+        p 問題なければ「スパイを決め直す」ボタンを押してください
+      a.spy-modal__btn-show(
+        ng-click="assignSpy()",
+        href="#js-modal-assign-spy"
+      ) スパイを決め直す
+      a.spy-modal__btn-cancel(href="#js-modal-assign-spy") キャンセル
 
 
 // 赤チームのスパイ確認モーダル
-.spy-modal(ng-class!="{ 'active':showFirstSpy, '':!showFirstSpy }")
-
+#js-modal-confirm-friend.spy-modal.modal
   .bar.bar-nav
-    h1.title 赤チームのスパイ確認
+    h1.title {{currentFriend.team.label}}チームのスパイ確認
 
-  .spy-modal__content(ng-show="!showSpy")
+  .spy-modal__content(ng-show="showFriendState == 'passed'")
     .spy-modal__heading
       h2 注意
     .spy-modal__text
       p
         | あなたは
-        strong 黄チーム
+        strong {{currentFriend.team.label}}チーム
         | ですか？
     .spy-buttons
-      a.spy-buttons__btn-show(
-        ng-click!="showSpy = !showSpy",
-        href="javascript:void(0)"
-      ) はい
       a.spy-buttons__btn-cancel(
-        ng-click!="closeSpyModal()",
+        href="#js-modal-confirm-friend"
+      ) はい
+      a.spy-buttons__btn-show(
+        ng-click="confirmFriend()",
         href="javascript:void(0)"
       ) いいえ
 
-  .spy-modal__content(ng-show="showSpy")
+  .spy-modal__content(ng-show="showFriendState == 'showing'")
     .spy-modal__heading
-      h2 赤チームのスパイは
+      h2 {{currentFriend.team.label}}チームのスパイは
     .spy-modal__text
       p
-        strong {{teams.spy.first.name}}
+        strong {{currentFriend.name}}
         | さんです
     .spy-buttons
       a.spy-buttons__btn-cancel(
-        ng-click!="closeSpyModal()",
-        href="javascript:void(0)"
+        href="#js-modal-confirm-friend"
       ) 閉じる
 
+  .spy-modal__content(ng-show="showFriendState == 'complete'")
+    .spy-modal__text
+      p
+        | スパイの再確認をすることはできません
+    .spy-buttons
+      a.spy-buttons__btn-cancel(
+        href="#js-modal-confirm-friend"
+      ) 閉じる
 
 // 黄チームのスパイ確認モーダル
-.spy-modal(ng-class!="{ 'active':showSecondSpy, '':!showSecondSpy }")
-
-  .bar.bar-nav
-    h1.title 黄チームのスパイ確認
-
-  .spy-modal__content(ng-show="!showSpy")
-    .spy-modal__heading
-      h2 注意
-    .spy-modal__text
-      p
-        | あなたは
-        strong 赤チーム
-        | ですか？
-    .spy-buttons
-      a.spy-buttons__btn-show(
-        ng-click!="showSpy = !showSpy",
-        href="javascript:void(0)"
-      ) はい
-      a.spy-buttons__btn-cancel(
-        ng-click!="closeSpyModal()",
-        href="javascript:void(0)"
-      ) いいえ
-
-  .spy-modal__content(ng-show="showSpy")
-    .spy-modal__heading
-      h2 赤チームのスパイは
-    .spy-modal__text
-      p
-        strong {{teams.spy.second.name}}
-        | さんです
-    .spy-buttons
-      a.spy-buttons__btn-cancel(
-        ng-click!="closeSpyModal()",
-        href="javascript:void(0)"
-      ) 閉じる
-
+//.spy-modal(ng-class!="{ 'active':showSecondSpy, '':!showSecondSpy }")
+//
+//  .bar.bar-nav
+//    h1.title 黄チームのスパイ確認
+//
+//  .spy-modal__content(ng-show="!showSpy")
+//    .spy-modal__heading
+//      h2 注意
+//    .spy-modal__text
+//      p
+//        | あなたは
+//        strong 赤チーム
+//        | ですか？
+//    .spy-buttons
+//      a.spy-buttons__btn-show(
+//        ng-click!="showSpy = !showSpy",
+//        href="javascript:void(0)"
+//      ) はい
+//      a.spy-buttons__btn-cancel(
+//        ng-click!="closeSpyModal()",
+//        href="javascript:void(0)"
+//      ) いいえ
+//
+//  .spy-modal__content(ng-show="showSpy")
+//    .spy-modal__heading
+//      h2 赤チームのスパイは
+//    .spy-modal__text
+//      p
+//        strong {{teams.spy.second.name}}
+//        | さんです
+//    .spy-buttons
+//      a.spy-buttons__btn-cancel(
+//        ng-click!="closeSpyModal()",
+//        href="javascript:void(0)"
+//      ) 閉じる
 
 //赤チームメンバーの役割確認
-.spy-modal(ng-class!="{ 'active':showFirstRole, '':!showFirstRole }")
-
+#js-modal-role.spy-modal.modal
   .bar.bar-nav
     h1.title 赤チームの役割を確認をします
 
-  .spy-modal__content(ng-show!="!showRole && !shownRole")
+  .spy-modal__content(ng-show="roleShowState == 'passed'")
     .spy-modal__heading
       h2 役割を確認します
-    .spy-modal__name {{identifier.name}}さん
+    .spy-modal__name {{currentPlayer.name}}さん
     .spy-modal__text 他の人に見えないように自分の役割を確認して下さい
     .spy-buttons
       a.spy-buttons__btn-show(
-        ng-click!="showRole = true",
+        ng-click="roleShowState = 'showing'",
         href="javascript:void(0)"
       )
         .icon.icon-search 自分の役割を確認する
 
-  .spy-modal__content(ng-show="showRole")
+  .spy-modal__content(ng-show="roleShowState == 'showing'")
     .spy-modal__heading
       h2 役割を確認して下さい
-    .spy-modal__name {{identifier.name}}さん
+    .spy-modal__name {{currentPlayer.name}}さん
     .spy-modal__text
-      p(ng-show="identifier.isSpy")
+      p(ng-show="currentPlayer.isSpy")
         | あなたは
         strong スパイです
-      p(ng-show="!identifier.isSpy")
+      p(ng-show="!currentPlayer.isSpy")
         | あなたは
         strong スパイではありません
     .spy-buttons
@@ -179,75 +187,69 @@ h2 スパイ決め
       )
         .icon.icon-right 次の人へ
 
-  .spy-modal__content(ng-show="shownRole")
+  .spy-modal__content(ng-show="roleShowState == 'complete'")
     .spy-modal__heading
-      h2 相手側に渡す
+      h2 役割の確認が終わりました
     .spy-modal__text
       p
         | 黄チームの人に渡してください
-        br
-        | 赤チームの人は下のボタンを押さないでください
+        | 役割の再確認をすることはできません
     .spy-buttons
-      a.spy-buttons__btn-assign(
-        ng-click="assignRole('second')",
-        href="javascript:void(0)"
-      ) 黄チームのスパイを決める
       a.spy-buttons__btn-cancel(
-        ng-click!="showFirstRole = false; showSecondRole = false",
-        href="javascript:void(0)"
+        href="#js-modal-role"
       ) この画面を閉じる
 
 
 //黄チームメンバーの役割確認
-.spy-modal(ng-class!="{ 'active':showSecondRole, '':!showSecondRole }")
-
-  .bar.bar-nav
-    h1.title 黄チームの役割を確認します
-
-  .spy-modal__content(ng-show!="!showRole && !shownRole")
-    .spy-modal__heading
-      h2 役割を確認します
-    .spy-modal__name {{identifier.name}}さん
-    .spy-modal__text 他の人に見えないように自分の役割を確認して下さい
-    .spy-buttons
-      a.spy-buttons__btn-show(
-        ng-click!="showRole = true",
-        href="javascript:void(0)"
-      )
-        .icon.icon-search 自分の役割を確認する
-
-  .spy-modal__content(ng-show="showRole")
-    .spy-modal__heading
-      h2 役割を確認して下さい
-    .spy-modal__name {{identifier.name}}さん
-    .spy-modal__text
-      p(ng-show="identifier.isSpy")
-        | あなたは
-        strong スパイです
-      p(ng-show="!identifier.isSpy")
-        | あなたは
-        strong スパイではありません
-    .spy-buttons
-      a.spy-buttons__btn-next(
-        ng-click="nextRole()",
-        href="javascript:void(0)"
-      )
-        .icon.icon-right 次の人へ
-
-  .spy-modal__content(ng-show="shownRole")
-    .spy-modal__heading
-      h2 相手側に渡す
-    .spy-modal__text
-      p
-        | 赤チームの人に渡してください
-        br
-        | 黄チームの人は下のボタンを押さないでください
-    .spy-buttons
-      a.spy-buttons__btn-assign(
-        ng-click="assignRole('first')",
-        href="javascript:void(0)"
-      ) 赤チームのスパイを決める
-      a.spy-buttons__btn-cancel(
-        ng-click!="showFirstRole = false; showSecondRole = false",
-        href="javascript:void(0)"
-      ) この画面を閉じる
+//.spy-modal(ng-class!="{ 'active':showSecondRole, '':!showSecondRole }")
+//
+//  .bar.bar-nav
+//    h1.title 黄チームの役割を確認します
+//
+//  .spy-modal__content(ng-show!="!showRole && !shownRole")
+//    .spy-modal__heading
+//      h2 役割を確認します
+//    .spy-modal__name {{identifier.name}}さん
+//    .spy-modal__text 他の人に見えないように自分の役割を確認して下さい
+//    .spy-buttons
+//      a.spy-buttons__btn-show(
+//        ng-click!="showRole = true",
+//        href="javascript:void(0)"
+//      )
+//        .icon.icon-search 自分の役割を確認する
+//
+//  .spy-modal__content(ng-show="showRole")
+//    .spy-modal__heading
+//      h2 役割を確認して下さい
+//    .spy-modal__name {{identifier.name}}さん
+//    .spy-modal__text
+//      p(ng-show="identifier.isSpy")
+//        | あなたは
+//        strong スパイです
+//      p(ng-show="!identifier.isSpy")
+//        | あなたは
+//        strong スパイではありません
+//    .spy-buttons
+//      a.spy-buttons__btn-next(
+//        ng-click="nextRole()",
+//        href="javascript:void(0)"
+//      )
+//        .icon.icon-right 次の人へ
+//
+//  .spy-modal__content(ng-show="shownRole")
+//    .spy-modal__heading
+//      h2 相手側に渡す
+//    .spy-modal__text
+//      p
+//        | 赤チームの人に渡してください
+//        br
+//        | 黄チームの人は下のボタンを押さないでください
+//    .spy-buttons
+//      a.spy-buttons__btn-assign(
+//        ng-click="assignRole('first')",
+//        href="javascript:void(0)"
+//      ) 赤チームのスパイを決める
+//      a.spy-buttons__btn-cancel(
+//        ng-click!="showFirstRole = false; showSecondRole = false",
+//        href="javascript:void(0)"
+//      ) この画面を閉じる

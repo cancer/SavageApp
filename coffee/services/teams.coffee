@@ -2,11 +2,17 @@
 kitd.factory 'teams', () ->
   # FIXME: class Teamも作ったほうがいい
   class Teams
-    TEAM_LABELS = ['Red', 'Yellow']
+    TEAM_NAMES     = ['red', 'yellow']
+    TEAM_LABELS    = ['Red', 'Yellow']
+    TEAM_LABELS_JP = ['赤', '黄']
     constructor: ->
       @members = null
-      @list = _.map TEAM_LABELS, (val) ->
-        {label: val}
+      @list = _.map TEAM_LABELS, (val, idx) ->
+        {
+          name: TEAM_NAMES[idx]
+          label: val
+          label_jp: TEAM_LABELS_JP[idx]
+        }
 
     init: (members) ->
       @members = members

@@ -1,12 +1,16 @@
 'use strict'
 #Model
-kitd.service 'spy', () ->
-  @data = {}
+kitd.factory 'Spy', () ->
+  class Spy
+    constructor: (member) ->
+      @data = {}
+      @set(member) if member?
 
-  @set = (member) =>
-    @data = member
-    @
+    set: (member) ->
+      member.isSpy = true
+      @data = member
+      @
 
-  @get = (attr) =>
-    @data[attr]
+    get: (attr) ->
+      @data[attr]
 
