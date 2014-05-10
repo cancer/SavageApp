@@ -1,0 +1,49 @@
+// 起床メール
+.mail-template {
+  margin-bottom: 10px;
+  padding: 15px;
+  background-color: #eee;
+  border-radius: 3px;
+}
+
+.mail-template__heading {
+  display: table;
+  table-layout: fixed;
+  width: 100%;
+  vertical-align: top;
+  margin-bottom: 10px;
+}
+
+.mail-template__heading-title {
+  display: table-cell;
+}
+
+.mail-template__heading-extra {
+  display: table-cell;
+  width: 24px;
+}
+
+.mail-template__text {
+  margin-bottom: 10px;
+}
+
+.mail-template__buttons {
+  margin-bottom: 10px;
+}
+
+.mail-template__button-select {
+  @extend .btn;
+  @extend .btn-block;
+  @extend .btn-positive;
+}
+
+.mail-template__textarea {
+  margin-bottom: 10px;
+  textarea {
+    width: 100%;
+    height: 50px;
+    margin-bottom: 0;
+  }
+}
+
+
