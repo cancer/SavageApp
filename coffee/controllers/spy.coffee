@@ -78,8 +78,7 @@ kitd.controller 'Spy', ['$scope', 'members', 'teams', 'spys', ($scope, members, 
     $scope.currentPlayer = members[currentPlayerIndex]
 
   completeShowRole = () ->
-    $scope.showRoleCompleted.push $scope.currentTeam.name
+    showRoleCompleted.push $scope.currentTeam.name
     $scope.roleShowState = 'complete'
-    console.log $scope.roleShowState
 ]
 
