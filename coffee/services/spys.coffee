@@ -1,7 +1,7 @@
 'use strict'
 #Collection
-kitd.factory 'spys', ['Spy', (Spy) ->
-  class Spys
+kitd.factory 'spies', ['Spy', (Spy) ->
+  class Spies
     constructor: () ->
       @models = []
 
@@ -41,6 +41,6 @@ kitd.factory 'spys', ['Spy', (Spy) ->
       _.filter @models, (spy) ->
         spy[attr] == val
 
-  new Spys()
+  new Spies()
 ]
 
