@@ -1,19 +1,18 @@
 'use strict'
-kitd.controller 'Spy', ['$scope', 'members', 'teams', ($scope, members, teams) ->
+kitd.controller 'Spy', ['$scope', 'members', 'teams', 'spys', ($scope, members, teams, spys) ->
   # TODO: まだ保存できないからシャッフルしちゃう
   if teams.isInitialized() then teams.shuffle() else teams.init(members)
+
+
+
   $scope.teams = teams.list
   $scope.teams[0].showContent = true
-  $scope.showFirstRole = false
-  $scope.showSecondRole = false
+  #$scope.showFirstRole = false
+  #$scope.showSecondRole = false
   $scope.identifier = null
   $scope.isAssignedSpy = false
 
-  # スパイを決める
-  $scope.assignSpy = ->
-    teams.assignSpy()
-    $scope.isAssignedSpy = true
-
+  # UI
   $scope.isInitializedTeam = ->
     teams.isInitialized()
 
@@ -21,12 +20,30 @@ kitd.controller 'Spy', ['$scope', 'members', 'teams', ($scope, members, teams) -
     _.each $scope.teams, (team) ->
       team.showContent = !team.showContent
 
+  showRoleComplete = ->
+    $scope.shownRole = true
+
+  $scope.closeSpyModal = ->
+    $scope.showSpy = false
+    $scope.showFirstSpy = false
+    $scope.showSecondSpy = false
+
+  # スパイを決める
+  $scope.assignSpy = ->
+    spys.reset()
+    _.each teams.list, (team) ->
+      spys.assignSpy team.members
+    console.log spys.models
+    $scope.isAssignedSpy = true
+
+  # スパイを確認する
   $scope.checkSpy = (team) ->
     if team is 'first'
       $scope.showFirstSpy = true
     else
       $scope.showSecondSpy = true
 
+  # 役割を確認する
   identifiers = null
   $scope.assignRole = (team) ->
     return
@@ -47,13 +64,5 @@ kitd.controller 'Spy', ['$scope', 'members', 'teams', ($scope, members, teams) -
     console.log $scope.identifier
     showRoleComplete() unless $scope.identifier
     $scope.showRole = false
-
-  showRoleComplete = ->
-    $scope.shownRole = true
-
-  $scope.closeSpyModal = ->
-    $scope.showSpy = false
-    $scope.showFirstSpy = false
-    $scope.showSecondSpy = false
 ]
 

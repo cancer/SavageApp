@@ -20,6 +20,10 @@ kitd.factory 'spys', ['Spy', (Spy) ->
       _.filter @models, (spy) ->
         spy.name == val.name
 
+    reset: (members) ->
+      @models = []
+      @set members if members?
+
     assignSpy: (members) ->
       spy = _.sample members
       @push spy
