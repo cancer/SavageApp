@@ -1,20 +1,29 @@
 'use strict'
 #Collection
-kitd.service 'spys', ['spy', (spy) ->
-  @data = []
+kitd.factory 'spys', ['Spy', (Spy) ->
+  class Spys
+    constructor: () ->
+      @models = []
 
-  @set = (member) =>
-    @data.push spy.set member
+    set: (members) ->
+      _.each members, (member) =>
+        @push member
 
-  @getAt = (index) =>
-    @data[index]
+    push: (member) ->
+      spy = new Spy(member) unless member instanceof Spy
+      @models.push spy
 
-  @filter = (attr, val) =>
-    _.filter
+    getAt: (index) ->
+      @models[index]
 
-  @assignSpy = (members) =>
-    spy = _.sample members
-    spy.isSpy = true
-    @set spy
+    filter: (attr, val) ->
+      _.filter @models, (spy) ->
+        spy.name == val.name
+
+    assignSpy: (members) ->
+      spy = _.sample members
+      @push spy
+
+  new Spys()
 ]
 
