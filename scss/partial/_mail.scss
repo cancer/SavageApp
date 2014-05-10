@@ -37,6 +37,21 @@
   @extend .btn-positive;
 }
 
+.mail-template__button-create {
+  @extend .btn;
+  @extend .btn-block;
+  @extend .btn-primary;
+  span {
+    @extend .icon;
+    @extend .icon-share;
+  }
+}
+
+.mail-template__button-closeMailForm {
+  @extend .icon;
+  @extend .icon-close;
+}
+
 .mail-template__textarea {
   margin-bottom: 10px;
   textarea {
