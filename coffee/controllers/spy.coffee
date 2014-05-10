@@ -1,5 +1,5 @@
 'use strict'
-kitd.controller 'Spy', ['$scope', 'members', 'teams', 'spys', ($scope, members, teams, spys) ->
+kitd.controller 'Spy', ['$scope', 'members', 'teams', 'spies', ($scope, members, teams, spies) ->
   # TODO: まだ保存できないからシャッフルしちゃう
   if teams.isInitialized() then teams.shuffle() else teams.init(members)
 
@@ -28,14 +28,14 @@ kitd.controller 'Spy', ['$scope', 'members', 'teams', 'spys', ($scope, members, 
 
   # スパイを決める
   $scope.assignSpy = ->
-    spys.reset()
+    spies.reset()
     _.each teams.list, (team) ->
-      spys.assignSpy team.members
+      spies.assignSpy team.members
     $scope.isAssignedSpy = true
-    $scope.spys = spys.get()
+    $scope.spies = spies.get()
 
     # FIXME: membersの対応待ち
-    # $scope.friends = spys.friends $scope.currentTeam
+    # $scope.friends = spies.friends $scope.currentTeam
     $scope.friends = [
       id: 1
       name: 'うの'

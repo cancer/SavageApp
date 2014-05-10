@@ -33,7 +33,7 @@ kitd.factory 'teams', () ->
       _.each _list, (members, idx) =>
         @list[idx].members = members
 
-    # FIXME: -> Spys#assignSpy
+    # FIXME: -> Spies#assignSpy
     assignSpy: ->
       _.each @list, (team, idx) =>
         team.spy = _.sample team.members
