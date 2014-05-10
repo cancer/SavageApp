@@ -68,5 +68,36 @@ a.btn(
   .icon(class="icon-share") 起床メール作成
 
 
+.mail-template
+  .mail-template__heading
+    h3.mail-template__heading-title 起床メールを作成しました
+    .mail-template__heading-extra
+      a.icon.icon-close
+
+  .mail-template__text
+    p 選択ボタンをクリックするとテキストが選択されるので、コピーしてご利用ください。
+  .mail-template__textarea
+    textarea
+      | ✌('ω'✌ )三✌('ω')✌三( ✌'ω')✌
+      |         朝起きた速報
+      | ✌('ω'✌ )三✌('ω')✌三( ✌'ω')✌
+      | 
+      | user1
+      | user2
+      | user3
+      | user4
+      | 
+      | ▂▅▇█▓▒░(’ω’)░▒▓█▅▂
+      |       まだ朝起きてない速報
+      | ▂▅▇█▓▒░(’ω’)░▒▓█▅▂
+      | 
+      | user2
+      | user3
+      | user4
+      | user5
+  .mail-template__buttons
+    a.mail-template__button-select テキストを選択する
+
+
 .members--awaken(ng-show="awakenMembers")
   div(ng-repeat="member in awakenMembers") {{member}}
