@@ -27,11 +27,16 @@ h2 スパイ決め
         href="#js-modal-role"
       ) {{currentTeam.label}}チームメンバーの役割を確認
       a.spy-buttons__btn-check(
-        href="javascript:void(0)"
-      ) {{currentTeam.label}}チームのスパイを確認
-    p {{currentTeam.label}}チームは以下のメンバーです
-    ul.members
-      li.members__member(ng-repeat="member in currentTeam.members") {{member.name}}
+        ng-repeat="friend in friends",
+        href="#js-modal-confirm-spy"
+      ) {{friend.team}}チームのスパイを確認
+
+.teams(ng-show="!isAssignedSpy")
+  p まずは上のボタンからスパイの選出を行ってください
+
+p {{currentTeam.label}}チームは以下のメンバーです
+ul.members
+  li.members__member(ng-repeat="member in currentTeam.members") {{member.name}}
 
 
 // スパイ設定用モーダル
@@ -67,10 +72,9 @@ h2 スパイ決め
 
 
 // 赤チームのスパイ確認モーダル
-.spy-modal.modal
-
+#js-modal-confirm-spy.spy-modal.modal
   .bar.bar-nav
-    h1.title 赤チームのスパイ確認
+    h1.title {{}}チームのスパイ確認
 
   .spy-modal__content(ng-show="!showSpy")
     .spy-modal__heading
@@ -103,44 +107,42 @@ h2 スパイ決め
         href="javascript:void(0)"
       ) 閉じる
 
-
 // 黄チームのスパイ確認モーダル
-.spy-modal(ng-class!="{ 'active':showSecondSpy, '':!showSecondSpy }")
-
-  .bar.bar-nav
-    h1.title 黄チームのスパイ確認
-
-  .spy-modal__content(ng-show="!showSpy")
-    .spy-modal__heading
-      h2 注意
-    .spy-modal__text
-      p
-        | あなたは
-        strong 赤チーム
-        | ですか？
-    .spy-buttons
-      a.spy-buttons__btn-show(
-        ng-click!="showSpy = !showSpy",
-        href="javascript:void(0)"
-      ) はい
-      a.spy-buttons__btn-cancel(
-        ng-click!="closeSpyModal()",
-        href="javascript:void(0)"
-      ) いいえ
-
-  .spy-modal__content(ng-show="showSpy")
-    .spy-modal__heading
-      h2 赤チームのスパイは
-    .spy-modal__text
-      p
-        strong {{teams.spy.second.name}}
-        | さんです
-    .spy-buttons
-      a.spy-buttons__btn-cancel(
-        ng-click!="closeSpyModal()",
-        href="javascript:void(0)"
-      ) 閉じる
-
+//.spy-modal(ng-class!="{ 'active':showSecondSpy, '':!showSecondSpy }")
+//
+//  .bar.bar-nav
+//    h1.title 黄チームのスパイ確認
+//
+//  .spy-modal__content(ng-show="!showSpy")
+//    .spy-modal__heading
+//      h2 注意
+//    .spy-modal__text
+//      p
+//        | あなたは
+//        strong 赤チーム
+//        | ですか？
+//    .spy-buttons
+//      a.spy-buttons__btn-show(
+//        ng-click!="showSpy = !showSpy",
+//        href="javascript:void(0)"
+//      ) はい
+//      a.spy-buttons__btn-cancel(
+//        ng-click!="closeSpyModal()",
+//        href="javascript:void(0)"
+//      ) いいえ
+//
+//  .spy-modal__content(ng-show="showSpy")
+//    .spy-modal__heading
+//      h2 赤チームのスパイは
+//    .spy-modal__text
+//      p
+//        strong {{teams.spy.second.name}}
+//        | さんです
+//    .spy-buttons
+//      a.spy-buttons__btn-cancel(
+//        ng-click!="closeSpyModal()",
+//        href="javascript:void(0)"
+//      ) 閉じる
 
 //赤チームメンバーの役割確認
 #js-modal-role.spy-modal.modal

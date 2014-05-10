@@ -31,8 +31,17 @@ kitd.controller 'Spy', ['$scope', 'members', 'teams', 'spys', ($scope, members, 
     spys.reset()
     _.each teams.list, (team) ->
       spys.assignSpy team.members
-    console.log spys.models
     $scope.isAssignedSpy = true
+    $scope.spys = spys.get()
+
+    # FIXME: membersの対応待ち
+    # $scope.friends = spys.friends $scope.currentTeam
+    $scope.friends = [
+      id: 1
+      name: 'うの'
+      isSpy: true
+      team: 'Yellow'
+    ]
 
   # スパイを確認する
   $scope.checkSpy = (team) ->
