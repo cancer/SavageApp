@@ -60,19 +60,20 @@ ul.members
             .icon(class="icon-close")
 
 
-a.btn(
-  ng-click="createWakeUpMail()",
-  class="btn-primary  btn-block  btn-outlined",
-  href="javascript:void(0)"
+a.mail-template__button-create(
+  ng-click="createWakeUpMail($event)"
+  ng-class="{'active': isMailFormShow}"
 )
-  .icon(class="icon-share") 起床メール作成
+  span 起床メール作成
 
 
-.mail-template
+.mail-template(ng-show="isMailFormShow")
   .mail-template__heading
     h3.mail-template__heading-title 起床メールを作成しました
     .mail-template__heading-extra
-      a.icon.icon-close
+      a.mail-template__button-closeMailForm(
+        ng-click="toggleMailForm($event)"
+      )
 
   .mail-template__text
     p 選択ボタンをクリックするとテキストが選択されるので、コピーしてご利用ください。
@@ -99,5 +100,5 @@ a.btn(
     a.mail-template__button-select(select-on-click) テキストを選択する
 
 
-.members--awaken(ng-show="awakenMembers")
-  div(ng-repeat="member in awakenMembers") {{member}}
+//.members--awaken(ng-show="awakenMembers")
+//  div(ng-repeat="member in awakenMembers") {{member}}
