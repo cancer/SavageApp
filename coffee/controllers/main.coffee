@@ -1,6 +1,7 @@
 'use strict'
 kitd.controller 'Main', ['$scope', 'members', ($scope, members) ->
   $scope.members = members
+  $scope.isMailFormShow = false
 
   $scope.showEdit = (member, $event) ->
     $event.preventDefault()
@@ -20,23 +21,9 @@ kitd.controller 'Main', ['$scope', 'members', ($scope, members) ->
     # TODO: サーバーとかstorageから削除する
     console.log member
 
-  $scope.awakenMembers = null
-  $scope.isMailFormShow = false
-
-  $scope.createWakeUpMail = ($event) ->
-    $event.preventDefault()
-    $event.stopPropagation()
-    awaken = []
-    _.each members, (member) ->
-      awaken.push(member.name) if member.isAwaken
-    $scope.awakenMembers = awaken
-    console.log $scope.awakenMembers
-    $scope.toggleMailForm($event)
-
   $scope.toggleMailForm = ($event) ->
     $event.preventDefault()
     $event.stopPropagation()
     $scope.isMailFormShow = !$scope.isMailFormShow
 
 ]
-
