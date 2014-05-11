@@ -1,13 +1,21 @@
 'use strict'
-kitd.factory 'teams', ['Collection', 'Team', 'members', (Collection, Team, members) ->
+kitd.factory 'teams', ['Collection', 'Team', 'members', 'LABEL', (Collection, Team, members, LABEL) ->
   class Teams extends Collection
-    constructor: (members) ->
+    constructor: (models) ->
       @models = []
-      @shuffle members
+      @shuffle models
 
-    set: (members) ->
-      team = new Team members
-      super
+    set: (models) ->
+      unless models[0] instanceof Team
+        idx = @models.length
+        models = _.map models, (model) ->
+          _model = _.extend {},
+            name: LABEL.team.name[idx]
+            name_en: LABEL.team.name_en[idx]
+            members: model
+          idx++
+          new Team _model
+      super models
 
     shuffle: (members) ->
       count = 0
