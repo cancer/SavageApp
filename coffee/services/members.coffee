@@ -1,24 +1,7 @@
 'use strict'
-kitd.factory 'members', ['Member', (Member) ->
+kitd.factory 'members', ['Collection', 'Member', (Collection, Member) ->
   # TODO: サーバーとかから取ってくる
-  class Members
-    constructor: (members) ->
-      @models = []
-
-    set: (members) ->
-      _.each members, (member) =>
-        @push member
-
-    @push: (member) ->
-      @models.push member
-
-    @reset: (members) ->
-      @models = []
-      @set members if members?
-
-    @get: () ->
-      return undefined unless @models?
-      @models
+  class Members extends Collection
 
   new Members
     {
