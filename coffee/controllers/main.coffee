@@ -1,6 +1,6 @@
 'use strict'
 kitd.controller 'Main', ['$scope', 'members', ($scope, members) ->
-  $scope.members = members
+  $scope.members = members.get()
   $scope.isMailFormShow = false
 
   $scope.showEdit = (member, $event) ->

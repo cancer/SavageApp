@@ -1,7 +1,26 @@
 'use strict'
-kitd.factory 'members', ->
+kitd.factory 'members', ['Member', (Member) ->
   # TODO: サーバーとかから取ってくる
-  [
+  class Members
+    constructor: (members) ->
+      @models = []
+
+    set: (members) ->
+      _.each members, (member) =>
+        @push member
+
+    @push: (member) ->
+      @models.push member
+
+    @reset: (members) ->
+      @models = []
+      @set members if members?
+
+    @get: () ->
+      return undefined unless @models?
+      @models
+
+  new Members
     {
       id: 1
       name: 'うの'
@@ -37,5 +56,4 @@ kitd.factory 'members', ->
       isEditorShow: false
       isSpy: false
     }
-  ]
-
+]
