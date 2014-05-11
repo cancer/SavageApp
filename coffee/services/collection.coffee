@@ -1,6 +1,6 @@
 'use strict'
 kitd.factory 'Collection', [() ->
-  class Spies
+  class Collection
     constructor: (models) ->
       @models = []
       @set models if models?
