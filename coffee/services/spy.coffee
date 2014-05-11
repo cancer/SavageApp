@@ -7,7 +7,7 @@ kitd.factory 'Spy', () ->
       @set(member) if member?
 
     set: (member) ->
-      @data = _.extend {isSpy: true}, member
+      @data = _.extend {}, member, {isSpy: true}
       @
 
     get: (attr) ->
