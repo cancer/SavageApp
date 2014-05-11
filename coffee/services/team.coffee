@@ -10,5 +10,6 @@ kitd.factory 'Team', ['Model', (Model) ->
         name: ''
         label: ''
         label_jp: ''
+        length: members.length
 ]
 

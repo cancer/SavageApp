@@ -8,11 +8,15 @@ kitd.controller 'Team', ['$scope', 'members', 'teams', ($scope, members, teams) 
   $scope.shuffleMembers = ->
     teams.shuffle members
     $scope.teams = teams.get()
+    $scope.currentTeam = teams.getAt 0
+    console.log $scope.currentTeam
     isInitializedTeam = true unless isInitializedTeam
 
-  $scope.toggleTeamTab = ->
+  $scope.currentTeam = teams.getAt 0
+  $scope.toggleTeamTab = (team) ->
     _.each $scope.teams, (team) ->
       team.showContent = !team.showContent
+    $scope.currentTeam = team
 
   $scope.isInitializedTeam = -> isInitializedTeam
 
