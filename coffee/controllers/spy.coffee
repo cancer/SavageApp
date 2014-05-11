@@ -1,20 +1,16 @@
 'use strict'
 kitd.controller 'Spy', ['$scope', 'members', 'teams', 'spies', ($scope, members, teams, spies) ->
-  # TODO: まだ保存できないからシャッフルしちゃう
-  if teams.isInitialized() then teams.shuffle() else teams.init(members)
-
-
-
-  $scope.teams = teams.list
-  $scope.currentTeam = teams.list[0]
+  $scope.teams = teams.get()
+  $scope.currentTeam = $scope.teams[0]
   # FIXME: -> directive
   $scope.teams[0].showContent = true
+  isInitializedTeam = true
 
   $scope.isAssignedSpy = false
+  console.log $scope.teams[0].get('length')
 
   # UI
-  $scope.isInitializedTeam = ->
-    teams.isInitialized()
+  $scope.isInitializedTeam = -> isInitializedTeam
 
   $scope.toggleTeamTab = (team) ->
     _.each $scope.teams, (team) ->
@@ -68,10 +64,12 @@ kitd.controller 'Spy', ['$scope', 'members', 'teams', 'spies', ($scope, members,
 
   $scope.initShowRole = () ->
     $scope.roleShowState = if isCompleteShowRole($scope.currentTeam) then 'complete' else 'passed'
-    $scope.currentPlayer = $scope.currentTeam.members[0]
+    $scope.currentPlayer = $scope.currentTeam.get('members')[0]
+    $scope.currentTeam.get('members')
+    console.log $scope.currentPlayer
     currentPlayerIndex = 0
 
-  $scope.nextRole = (members = $scope.currentTeam.members) ->
+  $scope.nextRole = (members = $scope.currentTeam.get('members')) ->
     $scope.roleShowState = 'passed'
     currentPlayerIndex++
     return completeShowRole() if members.length <= currentPlayerIndex

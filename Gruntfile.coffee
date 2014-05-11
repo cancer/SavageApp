@@ -8,6 +8,8 @@ module.exports = (grunt) ->
         files:
           'htdocs/js/app.js': [
             'coffee/app.coffee'
+            'coffee/services/model.coffee'
+            'coffee/services/collection.coffee'
             'coffee/services/**/*.coffee'
             'coffee/directives/**/*.coffee'
             'coffee/controllers/**/*.coffee'

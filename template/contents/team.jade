@@ -25,18 +25,15 @@ h2 チーム分け
     .teams__toggler
       a.teams__toggler-item(
         ng-class="{ 'active': team.showContent }"
-        ng-click="toggleTeamTab()",
+        ng-click="toggleTeamTab(team)",
         ng-repeat="team in teams",
         href="javascript:void(0)"
-      ) {{team.label}}：{{team.members.length}}人
+      ) {{team.get('name')}}：{{team.get('length')}}人
 
-    .teams__team(
-      ng-class="{ 'active': team.showContent }",
-      ng-repeat="team in teams"
-    )
-      | {{team.label}}
+    .teams__team.active
+      | {{currentTeam.label}}
       ul.members
-        li.members__member(ng-repeat="member in team.members")
+        li.members__member(ng-repeat="member in currentTeam.get('members')")
           .members__summary
             .members__name {{member.name}}
             .members__state

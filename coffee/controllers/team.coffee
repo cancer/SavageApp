@@ -1,23 +1,23 @@
 'use strict'
 kitd.controller 'Team', ['$scope', 'members', 'teams', ($scope, members, teams) ->
   $scope.members = members
-  $scope.teams = teams.list
+  $scope.teams = teams.get()
   $scope.teams[0].showContent = true
+  isInitializedTeam = false
 
   $scope.shuffleMembers = ->
-    unless $scope.initTeam
-      teams.init members
-      $scope.initTeam = true
-    else
-      teams.shuffle()
-    $scope.teams = teams.list
+    teams.shuffle members
+    $scope.teams = teams.get()
+    $scope.currentTeam = teams.getAt 0
+    isInitializedTeam = true unless isInitializedTeam
 
-  $scope.toggleTeamTab = ->
+  $scope.currentTeam = teams.getAt 0
+  $scope.toggleTeamTab = (team) ->
     _.each $scope.teams, (team) ->
       team.showContent = !team.showContent
+    $scope.currentTeam = team
 
-  $scope.isInitializedTeam = ->
-    teams.isInitialized()
+  $scope.isInitializedTeam = -> isInitializedTeam
 
 ]
 
