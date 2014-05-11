@@ -22,15 +22,6 @@ html(lang="ja", ng-app="kitd")
         include contents/team.jade
       script(id="contents/spy.jade", type="text/ng-template")
         include contents/spy.jade
-
-    .bar.bar-tab
-      a.tab-item.active(href="#/")
-        span.icon.icon-home
-        span.tab-label メンバー
-      a.tab-item(class="", href="#/team/")
-        span.icon.icon-list
-        span.tab-label チーム分け
-      a.tab-item(class="", href="#/spy/")
-        span.icon.icon-person
-        span.tab-label スパイ戦
-
+      script(id="contents/navMenu.jade", type="text/ng-template")
+        include contents/navMenu.jade
+    nt-nav-menu
