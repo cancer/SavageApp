@@ -1,9 +1,8 @@
 'use strict'
 kitd.factory 'Model', [() ->
   class Model
-    constructor: (data) ->
-      @data = {}
-      @set data if data?
+    constructor: (@data = {}) ->
+      @set @data
 
     set: (data) ->
       @data = data
