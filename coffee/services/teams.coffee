@@ -8,6 +8,7 @@ kitd.factory 'teams', ['Collection', 'Team', 'members', 'LABEL', (Collection, Te
     set: (models) ->
       unless models[0] instanceof Team
         idx = @models.length
+        console.log models
         models = _.map models, (model) ->
           _model = _.extend {},
             name: LABEL.team.name[idx]
@@ -19,7 +20,7 @@ kitd.factory 'teams', ['Collection', 'Team', 'members', 'LABEL', (Collection, Te
 
     shuffle: (members) ->
       count = 0
-      _members = _.shuffle members
+      _members = _.shuffle members.get()
       _list = _.partition _members, ->
         # 最後にカウントアップさせられない
         count++
