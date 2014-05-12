@@ -5,8 +5,8 @@ kitd.directive 'ntNavMenu', ['$location', 'LABEL', ($location, LABEL) ->
     templateUrl: 'contents/navMenu.jade'
     link: ($scope, element, attrs) ->
       links = element.find('a')
-      $links = $(links)
-      activeClass = attrs.navActiveClass || 'active'
+      $links = angular.element(links)
+      activeClass = attrs.navActiveClass || LABEL.modifier.active
       routePattern = /^#[^/]*/
       urlMap = {}
 
