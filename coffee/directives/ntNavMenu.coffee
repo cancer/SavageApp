@@ -17,9 +17,9 @@ kitd.directive 'ntNavMenu', ['$location', 'LABEL', ($location, LABEL) ->
 
       $scope.$on '$routeChangeStart', ()->
         $pathLink = urlMap[$location.path()]
-        if !$pathLink
-          return
         $links.removeClass(activeClass)
+        return unless $pathLink
         $pathLink.addClass(activeClass)
         @
   }
+]
