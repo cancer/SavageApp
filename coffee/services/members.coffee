@@ -3,7 +3,7 @@ kitd.factory 'members', ['Collection', 'Member', (Collection, Member) ->
   # TODO: サーバーとかから取ってくる
   class Members extends Collection
 
-  new Members
+  new Members([
     {
       id: 1
       name: 'うの'
@@ -39,4 +39,5 @@ kitd.factory 'members', ['Collection', 'Member', (Collection, Member) ->
       isEditorShow: false
       isSpy: false
     }
+  ])
 ]

@@ -1,8 +1,9 @@
 'use strict'
 kitd.factory 'Collection', [() ->
   class Collection
-    constructor: (@models = []) ->
-      @set @models
+    constructor: (models = []) ->
+      @models = []
+      @set models
 
     set: (models) ->
       _.each models, (model) =>
