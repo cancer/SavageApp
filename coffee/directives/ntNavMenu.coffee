@@ -1,5 +1,5 @@
 'use strict'
-kitd.directive 'ntNavMenu', ($location) ->
+kitd.directive 'ntNavMenu', ['$location', 'LABEL', ($location, LABEL) ->
   return {
     restrict: 'E'
     templateUrl: 'contents/navMenu.jade'
