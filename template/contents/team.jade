@@ -27,7 +27,7 @@ h2 チーム分け
         ng-class="{ 'active': team.showContent }"
         ng-click="toggleTeamTab(team)",
         ng-repeat="team in teams",
-        href="javascript:void(0)"
+        nt-prevent-tap
       ) {{team.get('name')}}：{{team.get('length')}}人
 
     .teams__team.active
