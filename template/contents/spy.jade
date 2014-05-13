@@ -91,7 +91,7 @@ ul.members
       ) はい
       a.spy-buttons__btn-show(
         ng-click="confirmFriend()",
-        href="javascript:void(0)"
+        nt-prevent-tap
       ) いいえ
 
   .spy-modal__content(ng-show="showFriendState == 'showing'")
@@ -128,7 +128,7 @@ ul.members
     .spy-buttons
       a.spy-buttons__btn-show(
         ng-click="roleShowState = 'showing'",
-        href="javascript:void(0)"
+        nt-prevent-tap
       )
         .icon.icon-search 自分の役割を確認する
 
@@ -146,7 +146,7 @@ ul.members
     .spy-buttons
       a.spy-buttons__btn-next(
         ng-click="nextRole()",
-        href="javascript:void(0)"
+        nt-prevent-tap
       )
         .icon.icon-right 次の人へ
 

@@ -5,7 +5,7 @@ p サバゲ部のメンバーを管理できます
 a.btn(
   ng-click="",
   class="btn-primary  btn-block  btn-outlined",
-  href="javascript:void(0)"
+  nt-prevent-tap
 )
   .icon(class="icon-plus") メンバー追加
 
@@ -29,7 +29,7 @@ ul.members
           a.members__btn-edit(
             class="btn"
             ng-click="showEdit(member)",
-            href="javascript:void(0)"
+            nt-prevent-tap
           ) 編集
     .members-form(ng-show="member.isEditorShow")
       .members-form__row
@@ -41,27 +41,27 @@ ul.members
           a.btn(
             ng-click="save(member)",
             class="btn-positive btn-block btn-outlined",
-            href="javascript:void(0)"
+            nt-prevent-tap
           )
             .icon(class="icon-edit")
         .members-form__btns-item
           a.btn(
             ng-click="delete(member)"
             class="btn-negative btn-block btn-outlined",
-            href="javascript:void(0)"
+            nt-prevent-tap
           )
             .icon(class="icon-trash")
         .members-form__btns-item
           a.btn(
             ng-click="hideEdit(member)"
             class="btn btn-block btn-outlined",
-            href="javascript:void(0)"
+            nt-prevent-tap
           )
             .icon(class="icon-close")
 
 
 a.mail-template__button-create(
-  ng-click="toggleMailForm($event)"
+  ng-click="toggleMailForm()"
   ng-class="{'active': isMailFormShow}"
 )
   span 起床メール作成
@@ -72,7 +72,8 @@ a.mail-template__button-create(
     h3.mail-template__heading-title 起床メールを作成しました
     .mail-template__heading-extra
       a.mail-template__button-closeMailForm(
-        ng-click="toggleMailForm($event)"
+        ng-click="toggleMailForm()",
+        nt-prevent-tap
       )
 
   .mail-template__text
