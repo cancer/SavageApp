@@ -12,11 +12,19 @@ Utility web-app for 関東IT土方組合
 ## Specs?
 - DB?
  - SQL? mongodb?
- - スプレッドシート使えば楽じゃない？
+ - ~~スプレッドシート使えば楽じゃない？~~
+- BaaSつかう
+ - Parse.com https://parse.com/
+ - http://www.riaxdnp.jp/?p=6420
+ - http://popdevelop.com/2013/11/parse-com-and-angularjs-for-easy-setup-of-user-authentication/
+ - https://github.com/felipesabino/angular-parse
+ - http://josebolanos.wordpress.com/2013/09/30/5-tips-for-using-parse-with-angularjs/
 - ワイヤー
  - https://cacoo.com/diagrams/4re2IZRzkpLgMl7D
-- Ionic使ってみたい
- - http://ionicframework.com/
+- ~~Ionic使ってみたい~~
+ - ~~http://ionicframework.com/~~
+- CSSフレームワークはratchetを使う
+ - http://goratchet.com/
 
 ### スプレッドシートからデータを取ってくる
 この辺
