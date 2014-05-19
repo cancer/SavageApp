@@ -1,5 +1,5 @@
 'use strict'
-kitd.factory 'kitd.Member', ['kitd.Model', (Model) ->
+kitd.factory 'Member', ['Model', (Model) ->
   class Member extends Model
 
 ]

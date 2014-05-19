@@ -1,5 +1,5 @@
 'use strict'
-kitd.factory 'kitd.members', ['kitd.Collection', 'kitd.Member', (Collection, Member) ->
+kitd.factory 'members', ['Collection', 'Member', (Collection, Member) ->
   # TODO: サーバーとかから取ってくる
   class Members extends Collection
 

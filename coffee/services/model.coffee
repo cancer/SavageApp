@@ -1,5 +1,5 @@
 'use strict'
-kitd.factory 'kitd.Model', [() ->
+kitd.factory 'Model', [() ->
   class Model
     constructor: (data = {}, options) ->
       @set data

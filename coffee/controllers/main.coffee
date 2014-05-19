@@ -1,9 +1,7 @@
 'use strict'
-kitd.controller 'Main', ['$scope', 'kitd.members', ($scope, kitd.members) ->
-  $scope.kitd.members = kitd.members.get()
+kitd.controller 'Main', ['$scope', 'members', ($scope, members) ->
+  $scope.members = members.get()
   $scope.isMailFormShow = false
-
-  console.log $scope.kitd.members
 
   $scope.showEdit = (member) ->
     member.isEditorShow = true

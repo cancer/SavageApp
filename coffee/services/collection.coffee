@@ -1,5 +1,5 @@
 'use strict'
-kitd.factory 'kitd.Collection', [() ->
+kitd.factory 'Collection', [() ->
   class Collection
     constructor: (models, options) ->
       @models = []

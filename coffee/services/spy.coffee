@@ -1,6 +1,6 @@
 'use strict'
 #Model
-kitd.factory 'kitd.Spy', () ->
+kitd.factory 'Spy', () ->
   class Spy
     constructor: (member) ->
       @data = {}
