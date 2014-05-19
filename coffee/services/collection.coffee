@@ -1,13 +1,17 @@
 'use strict'
 kitd.factory 'Collection', [() ->
   class Collection
-    constructor: (models = []) ->
+    constructor: (models, options) ->
       @models = []
-      @set models
+      @model = options.model if options?.model?
+      @set models, options
 
-    set: (models) ->
-      _.each models, (model) =>
-        @push model
+    set: (models, options) ->
+      return unless models
+      _.each models, (model, idx, models) =>
+        return @push model unless @model?
+        return if model instanceof @model
+        @push new @model model, options
 
     push: (model) ->
       @models.push model

@@ -1,22 +1,14 @@
 'use strict'
 kitd.factory 'teams', ['Collection', 'Team', 'members', 'LABEL', (Collection, Team, members, LABEL) ->
   class Teams extends Collection
-    constructor: (models) ->
-      @models = []
-      @shuffle models
-
-    set: (models) ->
-      unless models[0] instanceof Team
-        idx = @models.length
-        console.log models
-        models = _.map models, (model) ->
-          _model = _.extend {},
-            name: LABEL.team.name[idx]
-            name_en: LABEL.team.name_en[idx]
-            members: model
-          idx++
-          new Team _model
-      super models
+    set: (models, options) ->
+      _.each models, (model, idx, models) =>
+        return if model instanceof @model
+        attr = _.extend {},
+          name: LABEL.team.name[idx]
+          name_en: LABEL.team.name_en[idx]
+          members: model
+        @push new @model attr
 
     shuffle: (members) ->
       count = 0
@@ -27,6 +19,6 @@ kitd.factory 'teams', ['Collection', 'Team', 'members', 'LABEL', (Collection, Te
         (count % 2) is 1
       @reset _list
 
-  new Teams members
+  new Teams members, model: Team
 ]
 
