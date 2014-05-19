@@ -87,12 +87,25 @@ module.exports = (grunt) ->
               require('grunt-connect-proxy/lib/utils').proxyRequest
             ]
 
+    replace:
+      production:
+        options:
+          patterns: [{
+            cson: grunt.file.read('./config/production.cson')
+          }]
+        files: [{
+          expand: true
+          flatten: true
+          src: ['htdocs/js/app.js']
+          dest: 'htdocs/js/'
+        }]
+
     watch:
       options:
         livereload: true
       coffee:
         files: ['coffee/**/*.coffee']
-        tasks: ['coffee']
+        tasks: ['coffee', 'replace']
       compass:
         files: ['scss/**/*.scss']
         tasks: ['compass']
@@ -101,6 +114,6 @@ module.exports = (grunt) ->
         tasks: ['jade:compile']
 
   grunt.registerTask 'bower', ['shell:bower', 'concat:vendorjs']
-  grunt.registerTask 'build', ['coffee', 'bower', 'copy', 'jade', 'compass']
+  grunt.registerTask 'build', ['coffee', 'replace', 'bower', 'copy', 'jade', 'compass']
 
   grunt.registerTask 'default', ['copy', 'connect', 'watch']
