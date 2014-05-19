@@ -3,8 +3,8 @@ kitd.directive 'ntMailTemplateStr', () ->
   return {
     link: (scope, element, attrs) ->
       members = scope.members
-      scope.standingMembers = _.filter members, (m)-> m.isAwaken
-      scope.sleepingMembers = _.filter members, (m)-> !m.isAwaken
+      scope.standingMembers = _.filter members, (m)-> m.get('isAwaken')
+      scope.sleepingMembers = _.filter members, (m)-> !m.get('isAwaken')
       tmpl = """
       ✌('ω'✌ )三✌('ω')✌三( ✌'ω')✌
               朝起きた速報
