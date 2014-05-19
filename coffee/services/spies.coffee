@@ -1,6 +1,6 @@
 'use strict'
 #Collection
-kitd.factory 'spies', ['Spy', (Spy) ->
+kitd.factory 'kitd.spies', ['kitd.Spy', (Spy) ->
   class Spies
     constructor: () ->
       @models = []

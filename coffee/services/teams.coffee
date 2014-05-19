@@ -1,5 +1,5 @@
 'use strict'
-kitd.factory 'teams', ['Collection', 'Team', 'members', 'LABEL', (Collection, Team, members, LABEL) ->
+kitd.factory 'kitd.teams', ['kitd.Collection', 'kitd.Team', 'kitd.members', 'LABEL', (Collection, Team, members, LABEL) ->
   class Teams extends Collection
     set: (models, options) ->
       _.each models, (model, idx, models) =>
