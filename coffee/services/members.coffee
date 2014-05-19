@@ -39,5 +39,7 @@ kitd.factory 'members', ['Collection', 'Member', (Collection, Member) ->
       isEditorShow: false
       isSpy: false
     }
-  ])
+  ],
+    model: Member
+  )
 ]

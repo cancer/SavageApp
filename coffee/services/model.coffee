@@ -1,14 +1,19 @@
 'use strict'
 kitd.factory 'Model', [() ->
   class Model
-    constructor: (data = {}) ->
+    constructor: (data = {}, options) ->
       @set data
 
-    set: (data) ->
-      @data = data
+    set: (key, val, options) ->
+      return unless key?
+      if typeof key is 'object'
+        @data = key
+        options = val
+      else
+        @data[key] = options
       @
 
-    get: (attr) ->
-      @data[attr]
+    get: (key) ->
+      @data[key]
 ]
 
