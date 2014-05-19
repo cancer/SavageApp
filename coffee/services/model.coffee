@@ -15,5 +15,8 @@ kitd.factory 'Model', [() ->
 
     get: (key) ->
       @data[key]
+
+    toObject: ->
+      _.clone @data
 ]
 

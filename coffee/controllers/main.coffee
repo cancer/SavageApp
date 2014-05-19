@@ -20,4 +20,10 @@ kitd.controller 'Main', ['$scope', 'members', ($scope, members) ->
   $scope.toggleMailForm = () ->
     $scope.isMailFormShow = !$scope.isMailFormShow
 
+  $scope.toggleAwaken = (member) ->
+    isAwaken = member.get 'isAwaken'
+    data = _.extend {}, member.toObject(), isAwaken: !isAwaken
+    console.log data
+    member.set data
+
 ]
