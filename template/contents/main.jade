@@ -15,14 +15,7 @@ ul.members
       .members__name {{member.name}}
       .members__state
         .members__state-item
-          .members__btn-toggle(
-            class="toggle"
-            ng-click="toggleAwaken(member.name, $event)"
-            ng-class="{ active: isAwaken(member.name) }"
-            data-isAwakenLabel="参加"
-            data-isntAwakenLabel="不参加"
-          )
-            .toggle-handle
+          nt-awaken-checkbox
         .members__state-item
           a.members__btn-edit(
             class="btn"
