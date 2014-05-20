@@ -27,6 +27,7 @@ kitd.controller 'Main', ['$scope', 'members', ($scope, kitdMembers) ->
     target = angular.element $event.currentTarget
     target.addClass if changing and not target.hasClass 'active'
     target.removeClass if not changing and target.hasClass 'active'
+    $scope.members = kitdMembers.getData()
 
   $scope.isAwaken = (name) ->
     member = kitdMembers.getByName(name)
