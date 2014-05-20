@@ -11,14 +11,14 @@ a.btn(
 
 ul.members
   li.members__member(ng-repeat="member in members")
-    .members__summary(ng-show="!member.get('isEditorShow')")
-      .members__name {{member.get('name')}} {{data}}
+    .members__summary(ng-show="!member.isEditorShow")
+      .members__name {{member.name}}
       .members__state
         .members__state-item
           .members__btn-toggle(
             class="toggle"
-            ng-click="toggleAwaken(member)"
-            ng-class="{ 'active': member.get('isAwaken') }"
+            ng-click="toggleAwaken(member.name, $event)"
+            ng-class="{ active: isAwaken(member.name) }"
             data-isAwakenLabel="参加"
             data-isntAwakenLabel="不参加"
           )
@@ -29,7 +29,7 @@ ul.members
             ng-click="showEdit(member)",
             nt-prevent-tap
           ) 編集
-    .members-form(ng-show="member.get('isEditorShow')")
+    .members-form(ng-show="member.isEditorShow")
       .members-form__row
         .members-form__label 名前
         .members-form__value
