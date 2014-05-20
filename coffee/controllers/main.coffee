@@ -1,6 +1,6 @@
 'use strict'
-kitd.controller 'Main', ['$scope', 'members', ($scope, members) ->
-  $scope.members = members.get()
+kitd.controller 'Main', ['$scope', 'members', ($scope, kitdMembers) ->
+  $scope.members = kitdMembers.getData()
   $scope.isMailFormShow = false
 
   $scope.showEdit = (member) ->
@@ -20,10 +20,16 @@ kitd.controller 'Main', ['$scope', 'members', ($scope, members) ->
   $scope.toggleMailForm = () ->
     $scope.isMailFormShow = !$scope.isMailFormShow
 
-  $scope.toggleAwaken = (member) ->
-    isAwaken = member.get 'isAwaken'
-    data = _.extend {}, member.toObject(), isAwaken: !isAwaken
-    console.log data
-    member.set data
+  $scope.toggleAwaken = (name, $event) ->
+    member = kitdMembers.getByName name
+    member.toggleAwaken()
+    changing = member.isAwaken()
+    target = angular.element $event.currentTarget
+    target.addClass if changing and not target.hasClass 'active'
+    target.removeClass if not changing and target.hasClass 'active'
+    $scope.members = kitdMembers.getData()
 
+  $scope.isAwaken = (name) ->
+    member = kitdMembers.getByName(name)
+    member.isAwaken()
 ]
