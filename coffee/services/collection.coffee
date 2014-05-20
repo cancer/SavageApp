@@ -4,7 +4,6 @@ kitd.factory 'Collection', [() ->
     constructor: (models, options) ->
       @models = []
       @model = options.model if options?.model?
-      @dataList = []
       @set models, options
 
     set: (models, options) ->
@@ -16,7 +15,6 @@ kitd.factory 'Collection', [() ->
 
     push: (model) ->
       @models.push model
-      @dataList.push model.toObject()
 
     reset: (models) ->
       @models = []
@@ -27,8 +25,13 @@ kitd.factory 'Collection', [() ->
       @models
 
     getData: ->
-      return undefined unless @dataList?
-      @dataList
+      return undefined unless @models?
+      dataList = _.map @models, (model) ->
+        model.toObject()
+      dataList
+
+    getByName: (name) ->
+      @filter('name', name)[0]
 
     getAt: (index) ->
       return undefined unless @models?
@@ -37,7 +40,7 @@ kitd.factory 'Collection', [() ->
     filter: (attr, val) ->
       return undefined unless @models?
       _.filter @models, (model) ->
-        model[attr] == val
+        model.get(attr) == val
 
 ]
 
