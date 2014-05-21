@@ -6,9 +6,9 @@ kitd.directive 'ntAwakenCheckbox', ['LABEL', (LABEL) ->
     templateUrl: 'contents/checkbox.jade'
     link: (scope, element, attrs) ->
       member = scope.member
-      element.find('input').attr 'checked', member.data.isAwaken
+      element.find('input').attr 'checked', member.isAwaken
       element.on 'change', ($event) ->
-        scope.$parent.toggleAwaken(member)
+        scope.toggleAwaken(member.name, $event)
       @
   }
 ]

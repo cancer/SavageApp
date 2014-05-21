@@ -55,7 +55,7 @@
       content: "不参加";
     }
   }
-  input:checked + & {
+  input[checked="checked"] + & {
     color: #5cb85c;
     background-color: currentColor;
     &:before{
