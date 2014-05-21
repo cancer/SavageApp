@@ -3,7 +3,7 @@ kitd.directive 'ntNavMenu', ['$location', 'LABEL', ($location, LABEL) ->
   return {
     restrict: 'E'
     templateUrl: 'contents/navMenu.jade'
-    link: ($scope, element, attrs) ->
+    link: (scope, element, attrs) ->
       links = element.find('a')
       activeClass = attrs.navActiveClass || LABEL.modifier.active
       routePattern = /^#[^/]*/
@@ -19,7 +19,7 @@ kitd.directive 'ntNavMenu', ['$location', 'LABEL', ($location, LABEL) ->
         url = _link.attr('data-href')
         urlMap[url.replace(routePattern, '')] = _link
 
-      $scope.$on '$routeChangeStart', ()->
+      scope.$on '$routeChangeStart', ()->
         _pathLink = urlMap[$location.path()]
         links.removeClass(activeClass)
         return unless _pathLink
