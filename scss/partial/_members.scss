@@ -30,18 +30,37 @@
   padding-left: 10px;
 }
 //参加状態の切り替えボタン
-.members__btn-toggle {
-  width: 90px;
-  &:before{
-    content: attr(data-isntAwakenLabel);
-  }
-  &.active {
+.checkbox {
+  display: inline-block;
+  cursor: pointer;
+  text-align: center;
+  -webkit-user-select: none;
+  user-select: none;
+}
+.checkbox__check {
+  display: none;
+}
+.checkbox__text {
+  display: inline-block;
+  width: 60px;
+  padding: 2px 4px;
+  border: 1px solid;
+  font-size: 12px;
+  -webkit-transition: 0.3s all linear;
+  transition: 0.3s all linear;
+  border-radius: 3px;
+  input + & {
+    color: #ccc;
     &:before {
-      content: attr(data-isAwakenLabel);
+      content: "不参加";
     }
-    .toggle-handle {
-      -webkit-transform: translate3d(60px, 0, 0);
-      transform: translate3d(60px, 0, 0);
+  }
+  input[checked="checked"] + & {
+    color: #5cb85c;
+    background-color: currentColor;
+    &:before{
+      color: #fff;
+      content: "参加";
     }
   }
 }
