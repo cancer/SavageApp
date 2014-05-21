@@ -12,7 +12,9 @@ kitd.directive 'ntNavMenu', ['$location', 'LABEL', ($location, LABEL) ->
       #ラチェットが反応するので自前でhashを変更する
       links.on 'click', (e)->
         e.preventDefault()
-        location.hash = angular.element(this).attr('data-href')
+        url = angular.element(this).attr('data-href').replace(routePattern, '')
+        scope.$apply ()->
+          $location.path url
 
       _.each links, (link) ->
         _link = angular.element(link)
