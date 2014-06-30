@@ -8,7 +8,7 @@ kitd.factory 'Model', [() ->
     set: (key, val, options) ->
       return unless key?
       if typeof key is 'object'
-        @data = key
+        _.extend @data, key
         options = val
       else
         @data[key] = val

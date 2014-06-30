@@ -18,7 +18,9 @@ kitd.factory 'teams', ['Collection', 'Team', 'members', 'LABEL', (Collection, Te
         count++
         (count % 2) is 1
       models = _.map @models, (model, idx) ->
-        model.set 'members', _list[idx]
+        model.set
+          'members': _list[idx]
+          'length': _list[idx].length
       @reset models
 
     toggleShowContent: (name) ->
@@ -36,7 +38,7 @@ kitd.factory 'teams', ['Collection', 'Team', 'members', 'LABEL', (Collection, Te
       name_en: LABEL.team.name_en[1]
       members: null
     }
-  ], 
+  ],
     model: Team
     members: kitdMembers.getData()
 ]
