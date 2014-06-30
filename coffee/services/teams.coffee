@@ -1,5 +1,5 @@
 'use strict'
-kitd.factory 'teams', ['Collection', 'Team', 'members', 'LABEL', (Collection, Team, kitdMembers, LABEL) ->
+kitd.factory 'teams', ['Collection', 'Team', 'members', (Collection, Team, kitdMembers) ->
   class Teams extends Collection
     constructor: (models, options)->
       @members = options.members
@@ -29,13 +29,11 @@ kitd.factory 'teams', ['Collection', 'Team', 'members', 'LABEL', (Collection, Te
 
   new Teams [
     {
-      name: LABEL.team.name[0]
-      name_en: LABEL.team.name_en[0]
+      id: 0
       members: null
     }
     {
-      name: LABEL.team.name[1]
-      name_en: LABEL.team.name_en[1]
+      id: 1
       members: null
     }
   ],

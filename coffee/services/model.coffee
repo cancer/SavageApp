@@ -3,6 +3,7 @@ kitd.factory 'Model', [() ->
   class Model
     constructor: (data = {}, options) ->
       @data = {}
+      console.log data
       @set data
 
     set: (key, val, options) ->
