@@ -33,6 +33,9 @@ kitd.factory 'Collection', [() ->
     getByName: (name) ->
       @filter('name', name)[0]
 
+    getByLabel: (name) ->
+      @filter('name_en', name)[0]
+
     getAt: (index) ->
       return undefined unless @models?
       @models[index]

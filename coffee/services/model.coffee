@@ -2,6 +2,7 @@
 kitd.factory 'Model', [() ->
   class Model
     constructor: (data = {}, options) ->
+      @data = {}
       @set data
 
     set: (key, val, options) ->
@@ -10,7 +11,7 @@ kitd.factory 'Model', [() ->
         @data = key
         options = val
       else
-        @data[key] = options
+        @data[key] = val
       @
 
     get: (key) ->
