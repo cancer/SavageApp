@@ -1,7 +1,7 @@
 h2 チーム分け
 .division(ng-show="!modalShow")
 
-  div(ng-show="!isInitializedTeam()")
+  div(ng-show="!isInitializedTeam")
     p
       | まだチームが作成されていません。
     p
@@ -11,36 +11,35 @@ h2 チーム分け
       )
         span.icon.icon-refresh チームをシャッフルする
 
-  div(ng-show="isInitializedTeam()")
+  div(ng-show="isInitializedTeam")
     p
       | 以下のように割り振りされました。
     p
       a.btn.btn-primary.btn-block.btn-outlined.division__btn(
-        ng-click="",
         href="#js-shuffle-modal"
       )
         span.icon.icon-refresh チームを再度シャッフルする
 
-  .teams(ng-show="isInitializedTeam()")
+  .teams(ng-show="isInitializedTeam")
     .teams__toggler
       a.teams__toggler-item(
         ng-class="{ 'active': team.showContent }"
-        ng-click="toggleTeamTab(team)",
+        ng-click="toggleTeamTab(team.name)",
         ng-repeat="team in teams",
         nt-prevent-tap
-      ) {{team.get('name')}}：{{team.get('length')}}人
+      ) {{team.name}}：{{team.length}}人
 
     .teams__team.active
       | {{currentTeam.label}}
       ul.members
-        li.members__member(ng-repeat="member in currentTeam.get('members')")
+        li.members__member(ng-repeat="member in currentTeam.members")
           .members__summary
             .members__name {{member.name}}
             .members__state
               .members__state-item
                 .members__btn-changeTeam チーム移動
 
-#js-shuffle-modal.modal.division-modal(ng-class="")
+#js-shuffle-modal.modal.division-modal()
   .bar.bar-nav
     h1.title チームシャッフル
     a.icon.icon-close.pull-right(href="#js-shuffle-modal")

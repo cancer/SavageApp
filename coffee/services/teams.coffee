@@ -1,24 +1,43 @@
 'use strict'
-kitd.factory 'teams', ['Collection', 'Team', 'members', 'LABEL', (Collection, Team, members, LABEL) ->
+kitd.factory 'teams', ['Collection', 'Team', 'members', (Collection, Team, kitdMembers) ->
   class Teams extends Collection
+    constructor: (models, options)->
+      @members = options.members
+      super
+
     set: (models, options) ->
       _.each models, (model, idx, models) =>
-        return if model instanceof @model
-        attr = _.extend {},
-          name: LABEL.team.name[idx]
-          name_en: LABEL.team.name_en[idx]
-          members: model
-        @push new @model attr
+        if model instanceof @model then @push model else @push new @model model
+      @toggleShowContent @getAt(0).get('name_en')
 
-    shuffle: (members) ->
+    shuffle: () ->
       count = 0
-      _members = _.shuffle members.get()
+      _members = _.shuffle @members
       _list = _.partition _members, ->
         # 最後にカウントアップさせられない
         count++
         (count % 2) is 1
-      @reset _list
+      models = _.map @models, (model, idx) ->
+        model.set
+          'members': _list[idx]
+          'length': _list[idx].length
+      @reset models
 
-  new Teams members, model: Team
+    toggleShowContent: (name) ->
+      model = @getByLabel name
+      model.toggleShowContent()
+
+  new Teams [
+    {
+      id: 0
+      members: null
+    }
+    {
+      id: 1
+      members: null
+    }
+  ],
+    model: Team
+    members: kitdMembers.getData()
 ]
 

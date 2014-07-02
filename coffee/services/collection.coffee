@@ -9,16 +9,16 @@ kitd.factory 'Collection', [() ->
     set: (models, options) ->
       return unless models
       _.each models, (model, idx, models) =>
-        return @push model unless @model?
-        return if model instanceof @model
-        @push new @model model, options
+        return @push new @model model, options unless model instanceof @model
+        @push model
 
     push: (model) ->
       @models.push model
 
     reset: (models) ->
+      return unless models
       @models = []
-      @set models if models?
+      @set models
 
     get: () ->
       return undefined unless @models?
@@ -32,6 +32,9 @@ kitd.factory 'Collection', [() ->
 
     getByName: (name) ->
       @filter('name', name)[0]
+
+    getByLabel: (name) ->
+      @filter('name_en', name)[0]
 
     getAt: (index) ->
       return undefined unless @models?
